@@ -20,9 +20,9 @@ docker run \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--env RMW_IMPLEMENTATION=${rmw_cyclonedds_cpp} \
 		--env DISPLAY=$DISPLAY \
-        --name kinova_ops \
-        -v "$REPO_DIR:/moveit:rw" \
-        -v $PARENT_DIR:/root/moveit_ws:rw \
+        --name ros2 \
+        -v "$REPO_DIR:/ros2:rw" \
+        -v $PARENT_DIR:/root/ros2_ws:rw \
         -w /overlay_ws \
-        moveit:latest \
-        /moveit/entrypoint_scripts/entrypoint_docker_run.sh
+        ros2:latest \
+        /ros2/entrypoint_scripts/entrypoint_docker_run.sh

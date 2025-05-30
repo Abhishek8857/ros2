@@ -2,9 +2,10 @@ ARG ROS_DISTRO=humble
 FROM osrf/ros:${ROS_DISTRO}-desktop-full
 
 # Set environment variables
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LANG=C.UTF-8
-ENV LC_ALL=C.UTF-8
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \ 
+    LC_ALL=C.UTF-8 \
+    ROS_DOMAIN_ID=0
 
 # Update and install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -37,6 +38,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-ros-gz-sim \
     ros-humble-ros-gz-bridge \
     ros-humble-ackermann-msgs \
+    ros-humble-navigation2 \
+    ros-humble-nav2-bringup \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup locale
