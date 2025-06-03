@@ -7,6 +7,14 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=C.UTF-8 \
     ROS_DOMAIN_ID=0
 
+# Remove old ROS 2 keys and source lists
+RUN rm -f /etc/apt/sources.list.d/ros2-latest.list && \
+    rm -f /usr/share/keyrings/ros2-latest-archive-keyring.gpg
+
+# Fix expired ROS GPG key
+RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2.list
+
 # Update and install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -40,6 +48,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-ackermann-msgs \
     ros-humble-navigation2 \
     ros-humble-nav2-bringup \
+    ros-humble-pointcloud-to-laserscan \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup locale
@@ -84,7 +93,7 @@ COPY overlay_ws/ /overlay_ws/
 WORKDIR /overlay_ws/
 
 RUN source /opt/ros/humble/setup.bash && \
-    colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
+    colcon build --symlink-install --cmake-clean-cache --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # Entry point   
 CMD ["/bin/bash"]
