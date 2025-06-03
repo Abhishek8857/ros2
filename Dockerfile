@@ -6,6 +6,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
+# Remove old ROS 2 keys and source lists
+RUN rm -f /etc/apt/sources.list.d/ros2-latest.list && \
+    rm -f /usr/share/keyrings/ros2-latest-archive-keyring.gpg
+
+# Fix expired ROS GPG key
+RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2.list
+
 # Update and install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -16,11 +24,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lsb-release \
     locales \
     python3-colcon-common-extensions \
+    python3-rosinstall-generator \
     python3-pip \
     python3-vcstool \
     python3-rosdep \
+    python3-pytest-cov \
+    libbullet-dev \
+    libasio-dev \
+    libtinyxml2-dev \
+    libcunit1-dev \
+    libacl1-dev \
     libignition-common4-dev \
     ros-humble-filters \
+    ros-humble-rmw-cyclonedds-cpp \
+    ros-dev-tools \
+    ros-humble-ros-gz-bridge \
+    ros-humble-gazebo-ros-pkgs \
+    ros-humble-gazebo-ros2-control \
+    ros-humble-ign-ros2-control \
+    ros-humble-ros-gz-sim \
+    ros-humble-ros-gz-bridge \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup locale
@@ -66,16 +89,6 @@ RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 COPY entrypoint_scripts/ /entrypoint_scripts/
 RUN chmod +x /entrypoint_scripts/*.sh
 
-RUN apt-get update && apt-get install -y \
-    ros-humble-rmw-cyclonedds-cpp \
-    ros-dev-tools \
-    # ros-humble-ros-gz-bridge \
-    # ros-humble-gazebo-ros-pkgs \
-    # ros-humble-gazebo-ros2-control \
-    # ros-humble-ign-ros2-control \
-    # ros-humble-ros-gz-sim \
-    # ros-humble-ros-gz-bridge \
-    && rm -rf /var/lib/apt/lists/*
 
 # Copy contents in overlay ws
 COPY overlay_ws/ /overlay_ws/
