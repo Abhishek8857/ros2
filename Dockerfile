@@ -19,8 +19,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3-vcstool \
     python3-rosdep \
-    libignition-common4-dev \
-    ros-humble-filters \
+    ros-dev-tools \
+    ros-${ROS_DISTRO}-filters \
+    ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
+    ros-${ROS_DISTRO}-ros-gz-bridge \
+    ros-${ROS_DISTRO}-ros-gz-sim \
+    ros-${ROS_DISTRO}-ros-gz-interfaces \
+    ros-${ROS_DISTRO}-gazebo-ros2-control \
+    ros-${ROS_DISTRO}-ign-ros2-control \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup locale
@@ -39,50 +45,43 @@ RUN apt-get update --fix-missing -y
 # Source ROS setup
 SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 
-# Copy the entire colcon_ws  and overlay_ws directory with the submodule into the Docker image
+# Copy the entire colcon_ws and overlay_ws directory with the submodule into the Docker image
 COPY colcon_ws/ /colcon_ws/
+COPY overlay_ws/ /overlay_ws/
+
+# Colcon workspace
 WORKDIR /colcon_ws/src/
 
 # Update package lists and import MoveIt repositories based on the specified ROS distribution
 RUN apt-get update && \
     for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
         vcs import < "$repo"; \
-    done && \
-    rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+    done
 
+# Install dependancies
+RUN rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+
+# Colcon workspace
 WORKDIR /colcon_ws/
-
-RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
-
-# Install dependencies
-RUN rosdep install --from-paths src --ignore-src -r -y
 
 # Build the workspace with resource management
 RUN source /opt/ros/humble/setup.bash && \
-    MAKEFLAGS="-j4 -l2" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --symlink-install --executor sequential
+    MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --symlink-install 
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/
 RUN chmod +x /entrypoint_scripts/*.sh
 
-RUN apt-get update && apt-get install -y \
-    ros-humble-rmw-cyclonedds-cpp \
-    ros-dev-tools \
-    ros-humble-ros-gz-bridge \
-    ros-humble-gazebo-ros-pkgs \
-    ros-humble-gazebo-ros2-control \
-    ros-humble-ign-ros2-control \
-    ros-humble-ros-gz-sim \
-    ros-humble-ros-gz-bridge \
-    && rm -rf /var/lib/apt/lists/*
-
 # Copy contents in overlay ws
-COPY overlay_ws/ /overlay_ws/
 WORKDIR /overlay_ws/
 
-RUN source /colcon_ws/install/setup.bash && \
-    colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
+
+RUN source /opt/ros/humble/setup.bash && \
+   colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # Entry point   
 CMD ["/bin/bash"]
+

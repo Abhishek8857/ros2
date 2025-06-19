@@ -20,9 +20,9 @@ docker run \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--env RMW_IMPLEMENTATION=${rmw_cyclonedds_cpp} \
 		--env DISPLAY=$DISPLAY \
-        --name kinova_ops \
-        -v "$REPO_DIR:/moveit:rw" \
-        -v $PARENT_DIR:/root/moveit_ws:rw \
+        --name kuka \
+        -v "$REPO_DIR:/kuka:rw" \
+        -v $PARENT_DIR:/root/kuka_ws:rw \
         -w /overlay_ws \
-        moveit:latest \
-        /moveit/entrypoint_scripts/entrypoint_docker_run.sh
+        kuka:latest \
+        /kuka/entrypoint_scripts/entrypoint_docker_run.sh

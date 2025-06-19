@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="world" value="world"/>
+  <xacro:property name="transmission_actuator_hw_interface" value="EffortJointInterface"/>
+  <xacro:property name="transmission_joint_hw_interface" value="hardware_interface/EffortJointInterface"/>
+  <xacro:property name="base_frame_joint_type" value="fixed"/>
+  <xacro:property name="flange_joint_type" value="fixed"/>
+  <xacro:property name="tool0_joint_type" value="fixed"/>
+  <xacro:property name="base_joint_type" value="fixed"/>
+  <xacro:property name="transmission_type" value="transmission_interface/SimpleTransmission"/>
+  <xacro:macro name="kr240r2900_2" params="prefix">
+    <link name="${prefix}base"/>
+    <link name="${prefix}base_link">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/base_link.stl"/>
+        </geometry>
+        <origin rpy="0.0 -0.0 0.0" xyz="0.0 0.0 0.0"/>
+      </collision>
+      <inertial>
+        <inertia ixx="12.8308803908269" ixy="0.0" ixz="0.0" iyy="9.01196989503174" iyz="0.0" izz="14.2958860155811"/>
+        <mass value="2.2596E2"/>
+        <origin rpy="-0.050860131411839364 -0.0019883389878403855 1.5231487443995257" xyz="-0.0594893335103558 0.0021559506107275703 0.20325069304301602"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/base_link.dae"/>
+        </geometry>
+        <origin rpy="0.0 -0.0 0.0" xyz="0.0 0.0 0.0"/>
+      </visual>
+    </link>
+    <link name="${prefix}flange"/>
+    <link name="${prefix}link_1">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_1.stl"/>
+        </geometry>
+        <origin rpy="-3.141592653589793 0.0 -0.0" xyz="0.0 -3.742520618194312e-17 0.30560000000000004"/>
+      </collision>
+      <inertial>
+        <inertia ixx="31.7863155713632" ixy="0.0" ixz="0.0" iyy="13.3310318632879" iyz="0.0" izz="34.1806723147255"/>
+        <mass value="3.6737E2"/>
+        <origin rpy="-0.3511974418307098 -1.2748494702775013 -1.451472378819504" xyz="0.0282630046002668 0.011134569507580901 -0.235336739526907"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_1.dae"/>
+        </geometry>
+        <origin rpy="-3.141592653589793 0.0 -0.0" xyz="0.0 -3.742520618194312e-17 0.30560000000000004"/>
+      </visual>
+    </link>
+    <link name="${prefix}link_2">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_2.stl"/>
+        </geometry>
+        <origin rpy="1.5707963267948968 -0.0 1.5707963267948966" xyz="-0.645 -0.32999999999999996 0.07200000000000009"/>
+      </collision>
+      <inertial>
+        <inertia ixx="6.11156632969732" ixy="0.0" ixz="0.0" iyy="82.7509302435823" iyz="0.0" izz="83.2585967164398"/>
+        <mass value="2.5056E2"/>
+        <origin rpy="0.5376277345260776 0.09067448308201614 0.007191247120022789" xyz="0.577871168582376 -0.0013846982758620701 -0.125571679438059"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_2.dae"/>
+        </geometry>
+        <origin rpy="1.5707963267948968 -0.0 1.5707963267948966" xyz="-0.645 -0.32999999999999996 0.07200000000000009"/>
+      </visual>
+    </link>
+    <link name="${prefix}link_3">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_3.stl"/>
+        </geometry>
+        <origin rpy="1.5707963267948968 -0.0 -0.0" xyz="-0.33000000000000007 1.995 0.1750000000000001"/>
+      </collision>
+      <inertial>
+        <inertia ixx="3.5116656416772" ixy="0.0" ixz="0.0" iyy="21.2369382062293" iyz="0.0" izz="22.2568374187268"/>
+        <mass value="1.9153E2"/>
+        <origin rpy="2.1669667459514192 -0.06384171041203501 -0.05417245551061014" xyz="0.172684696914322 -0.0754866078421135 0.137131569989036"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_3.dae"/>
+        </geometry>
+        <origin rpy="1.5707963267948968 -0.0 -0.0" xyz="-0.33000000000000007 1.995 0.1750000000000001"/>
+      </visual>
+    </link>
+    <link name="${prefix}link_4">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_4.stl"/>
+        </geometry>
+        <origin rpy="1.8369701987210297e-16 1.5707963267948966 0.0" xyz="-2.11 1.2451666974470345e-17 1.158"/>
+      </collision>
+      <inertial>
+        <inertia ixx="0.201148018312786" ixy="0.0" ixz="0.0" iyy="1.61560245160953" iyz="0.0" izz="1.64041744739939"/>
+        <mass value="4.7942845677E1"/>
+        <origin rpy="1.570992251106443 -1.3912820307912874 -1.5710550346492322" xyz="-8.82769985166503E-6 0.030038038468557102 -0.22035014882022402"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_4.dae"/>
+        </geometry>
+        <origin rpy="1.8369701987210297e-16 1.5707963267948966 0.0" xyz="-2.11 1.2451666974470345e-17 1.158"/>
+      </visual>
+    </link>
+    <link name="${prefix}link_5">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_5.stl"/>
+        </geometry>
+        <origin rpy="1.5707963267948968 -3.749399456654644e-33 -6.123233995736766e-17" xyz="-1.55 2.11 -0.1065"/>
+      </collision>
+      <inertial>
+        <inertia ixx="0.34306033744263" ixy="0.0" ixz="0.0" iyy="0.19689279813435" iyz="0.0" izz="0.347976409834227"/>
+        <mass value="2.3687644624E1"/>
+        <origin rpy="1.6224506086845294 -0.9319967320369543 -0.06488528019057721" xyz="0.062409087507207 2.1098685344562402E-4 -0.0640578845918283"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_5.dae"/>
+        </geometry>
+        <origin rpy="1.5707963267948968 -3.749399456654644e-33 -6.123233995736766e-17" xyz="-1.55 2.11 -0.1065"/>
+      </visual>
+    </link>
+    <link name="${prefix}link_6">
+      <collision>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_6.stl"/>
+        </geometry>
+        <origin rpy="1.2246467991473532e-16 1.5707963267948966 0.0" xyz="-2.11 -1.233749536060084e-16 1.7194999999999998"/>
+      </collision>
+      <inertial>
+        <inertia ixx="0.0369411271609063" ixy="0.0" ixz="0.0" iyy="0.0369531532955219" iyz="0.0" izz="0.0482510013261814"/>
+        <mass value="1.2245718539E1"/>
+        <origin rpy="1.0758644105161934E-4 -9.812464461477239E-5 -0.03310542818348608" xyz="4.5958226185134805E-6 -5.59089459126197E-6 -0.0254361898182505"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_6.dae"/>
+        </geometry>
+        <origin rpy="1.2246467991473532e-16 1.5707963267948966 0.0" xyz="-2.11 -1.233749536060084e-16 1.7194999999999998"/>
+      </visual>
+    </link>
+    <link name="${prefix}tool0"/>
+    <link name="${world}"/>
+    <joint name="${prefix}base_joint" type="${base_joint_type}">
+      <child link="${prefix}base_link"/>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <parent link="${world}"/>
+    </joint>
+    <joint name="${prefix}base_link-base" type="${base_frame_joint_type}">
+      <child link="${prefix}base"/>
+      <parent link="${prefix}base_link"/>
+    </joint>
+    <joint name="${prefix}joint_1" type="revolute">
+      <axis xyz="0.0 0.0 1.0"/>
+      <child link="${prefix}link_1"/>
+      <limit effort="7.29E3" lower="-3.2288591125E0" upper="3.2288591125E0" velocity="1.79768912955416E0"/>
+      <origin rpy="3.141592653589793 -0.0 0.0" xyz="0.0 0.0 0.30560000000000004"/>
+      <parent link="${prefix}base_link"/>
+    </joint>
+    <joint name="${prefix}joint_2" type="revolute">
+      <axis xyz="0.0 0.0 1.0"/>
+      <child link="${prefix}link_2"/>
+      <limit effort="9.24E3" lower="-2.44346095E0" upper="-2.44346095E-1" velocity="1.64060949687467E0"/>
+      <origin rpy="1.5707963267948966 -0.0 0.0" xyz="0.33 0.07200000000000001 -0.3394"/>
+      <parent link="${prefix}link_1"/>
+    </joint>
+    <joint name="${prefix}joint_3" type="revolute">
+      <axis xyz="0.0 0.0 1.0"/>
+      <child link="${prefix}link_3"/>
+      <limit effort="7.29542236549771E3" lower="-2.0943951E0" upper="2.93215314E0" velocity="1.74532925199433E0"/>
+      <origin rpy="0.0 -0.0 0.0" xyz="1.35 0.0 -0.10300000000000001"/>
+      <parent link="${prefix}link_2"/>
+    </joint>
+    <joint name="${prefix}joint_4" type="revolute">
+      <axis xyz="0.0 0.0 1.0"/>
+      <child link="${prefix}link_4"/>
+      <limit effort="2.3237103673905E3" lower="-6.108652375E0" upper="6.108652375E0" velocity="2.96705972839036E0"/>
+      <origin rpy="1.5707963267948966 -0.0 -1.5707963267948966" xyz="0.8280000000000001 -0.115 0.17500000000000002"/>
+      <parent link="${prefix}link_3"/>
+    </joint>
+    <joint name="${prefix}joint_5" type="revolute">
+      <axis xyz="0.0 0.0 1.0"/>
+      <child link="${prefix}link_5"/>
+      <limit effort="2.32603308821414E3" lower="-2.13802833125E0" upper="2.13802833125E0" velocity="2.25147473507268E0"/>
+      <origin rpy="0.0 1.5707963267948966 1.5707963267948966" xyz="0.0 0.1065 -0.392"/>
+      <parent link="${prefix}link_4"/>
+    </joint>
+    <joint name="${prefix}joint_6" type="revolute">
+      <axis xyz="0.0 0.0 1.0"/>
+      <child link="${prefix}link_6"/>
+      <limit effort="1.49286251041991E3" lower="-6.108652375E0" upper="6.108652375E0" velocity="3.59537825910832E0"/>
+      <origin rpy="1.5707963267948966 -0.0 -1.5707963267948966" xyz="0.1695 0.0 -0.1065"/>
+      <parent link="${prefix}link_5"/>
+    </joint>
+    <joint name="${prefix}link_6-flange" type="${flange_joint_type}">
+      <child link="${prefix}flange"/>
+      <origin rpy="0.0 1.5707963267948966 0.0" xyz="0.0 0.0 -0.07050000000000001"/>
+      <parent link="${prefix}link_6"/>
+    </joint>
+    <joint name="${prefix}link_6-tool0" type="${tool0_joint_type}">
+      <child link="${prefix}tool0"/>
+      <origin rpy="3.141592653589793 1.2246467991473532E-16 3.141592653589793" xyz="0.0 0.0 -0.07050000000000001"/>
+      <parent link="${prefix}link_6"/>
+    </joint>
+    <transmission name="${prefix}joint_1_trans">
+      <actuator name="${prefix}joint_1_motor">
+        <hardwareInterface>${transmission_actuator_hw_interface}</hardwareInterface>
+        <mechanicalReduction>-256.857142857142857142857143</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}joint_1">
+        <hardwareInterface>${transmission_joint_hw_interface}</hardwareInterface>
+      </joint>
+      <type>${transmission_type}</type>
+    </transmission>
+    <transmission name="${prefix}joint_2_trans">
+      <actuator name="${prefix}joint_2_motor">
+        <hardwareInterface>${transmission_actuator_hw_interface}</hardwareInterface>
+        <mechanicalReduction>-269.176470588235294117647059</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}joint_2">
+        <hardwareInterface>${transmission_joint_hw_interface}</hardwareInterface>
+      </joint>
+      <type>${transmission_type}</type>
+    </transmission>
+    <transmission name="${prefix}joint_3_trans">
+      <actuator name="${prefix}joint_3_motor">
+        <hardwareInterface>${transmission_actuator_hw_interface}</hardwareInterface>
+        <mechanicalReduction>251.333333333333333333333333</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}joint_3">
+        <hardwareInterface>${transmission_joint_hw_interface}</hardwareInterface>
+      </joint>
+      <type>${transmission_type}</type>
+    </transmission>
+    <transmission name="${prefix}joint_4_trans">
+      <actuator name="${prefix}joint_4_motor">
+        <hardwareInterface>${transmission_actuator_hw_interface}</hardwareInterface>
+        <mechanicalReduction>-198.9</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}joint_4">
+        <hardwareInterface>${transmission_joint_hw_interface}</hardwareInterface>
+      </joint>
+      <type>${transmission_type}</type>
+    </transmission>
+    <transmission name="${prefix}joint_5_trans">
+      <actuator name="${prefix}joint_5_motor">
+        <hardwareInterface>${transmission_actuator_hw_interface}</hardwareInterface>
+        <mechanicalReduction>-206.833333333333333333333333</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}joint_5">
+        <hardwareInterface>${transmission_joint_hw_interface}</hardwareInterface>
+      </joint>
+      <type>${transmission_type}</type>
+    </transmission>
+    <transmission name="${prefix}joint_6_trans">
+      <actuator name="${prefix}joint_6_motor">
+        <hardwareInterface>${transmission_actuator_hw_interface}</hardwareInterface>
+        <mechanicalReduction>164.652995951417004048582996</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}joint_6">
+        <hardwareInterface>${transmission_joint_hw_interface}</hardwareInterface>
+      </joint>
+      <type>${transmission_type}</type>
+    </transmission>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>kr240r2900_2</name>
+  <version>0.0.0</version>
+  <description>ROS2 package data for kr240r2900_2</description>
+  <maintainer email="KUKA-HU-RD-TeamFirefly@kuka.com">Team Firefly</maintainer>
+  <license>Apache-2.0</license>
+
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+
+
+  <!-- Author tags are optional, multiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintainers, but could be -->
+  <author email="KUKA-HU-RD-TeamFirefly@kuka.com">Team Firefly</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_plugins</depend>
+  <depend>hardware_interface</depend>
+  <depend>controller_manager</depend>
+  <depend>control_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>pluginlib</depend>
+  <depend>transmission_interface</depend>
+  <depend>urdf</depend>
+  <depend>controller_interface</depend>
+  <depend>control_toolbox</depend>
+  <depend>joint_limits_interface</depend>
+  <depend>robot_state_publisher</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" gazebo_model_path="${prefix}/models"/>
+  </export>
+</package>

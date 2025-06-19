@@ -1,1 +1,1 @@
-docker build -t moveit -f Dockerfile .
+docker build -t kuka -f Dockerfile .
