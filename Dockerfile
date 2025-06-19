@@ -51,7 +51,6 @@ RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 
 # Copy the entire colcon_ws and overlay_ws directory with the submodule into the Docker image
 COPY colcon_ws/ /colcon_ws/
-COPY overlay_ws/ /overlay_ws/
 
 # Colcon workspace
 WORKDIR /colcon_ws/src/
@@ -68,13 +67,14 @@ WORKDIR /colcon_ws/
 
 # Build the workspace with resource management
 RUN source /opt/ros/humble/setup.bash && \
-    MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --symlink-install 
+    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/
 RUN chmod +x /entrypoint_scripts/*.sh
 
 # Copy contents in overlay ws
+COPY overlay_ws/ /overlay_ws/
 WORKDIR /overlay_ws/
 
 RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
