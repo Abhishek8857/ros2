@@ -1,4 +1,0 @@
-[submodule "colcon_ws/src/moveit2"]
-	path = colcon_ws/src/moveit2
-	url = https://github.com/moveit/moveit2.git
-	branch = humble

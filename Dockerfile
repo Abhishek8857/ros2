@@ -5,6 +5,8 @@ FROM osrf/ros:${ROS_DISTRO}-desktop-full
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
+ENV ROS_DOMAIN_ID=0
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 # Update and install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -58,10 +60,8 @@ WORKDIR /colcon_ws/src/
 RUN apt-get update && \
     for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
         vcs import < "$repo"; \
-    done
-
-# Install dependancies
-RUN rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+    done && \
+    rosdep install -r --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} -y
 
 # Colcon workspace
 WORKDIR /colcon_ws/
