@@ -1,5 +1,5 @@
 ARG ROS_DISTRO=humble
-FROM osrf/ros:${ROS_DISTRO}-desktop-full
+FROM osrf/ros:${ROS_DISTRO}-desktop
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -67,7 +67,7 @@ WORKDIR /colcon_ws/
 
 # Build the workspace with resource management
 RUN source /opt/ros/humble/setup.bash && \
-    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+    MAKEFLAGS="-j4 -l2" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/

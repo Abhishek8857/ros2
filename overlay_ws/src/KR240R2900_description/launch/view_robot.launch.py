@@ -24,7 +24,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("kuka_robot_description"), "urdf", "kr240r2900_2.xacro"]
+                [FindPackageShare("KR240R2900_description"), "urdf", "kr240r2900_2.xacro"]
             ),
             " ",
             "use_fake_hardware:=true",
