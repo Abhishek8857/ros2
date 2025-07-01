@@ -24,22 +24,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-dev-tools \
     ros-${ROS_DISTRO}-filters \
     ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
-    ros-${ROS_DISTRO}-ros-gz-bridge \
-    ros-${ROS_DISTRO}-ros-gz-sim \
-    ros-${ROS_DISTRO}-ros-gz-interfaces \
-    ros-${ROS_DISTRO}-gazebo-ros2-control \
-    ros-${ROS_DISTRO}-ign-ros2-control \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup locale
 RUN locale-gen en_US en_US.UTF-8 && \
     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-
-# Install Ignition Fortress (Gazebo 6)
-RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" > /etc/apt/sources.list.d/gazebo-stable.list && \
-    wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
-    apt-get update && apt-get install -y ignition-fortress libignition-gazebo6-dev && \
-    rm -rf /var/lib/apt/lists/*
 
 # Fix missing update
 RUN apt-get update --fix-missing -y
@@ -67,7 +56,7 @@ WORKDIR /colcon_ws/
 
 # Build the workspace with resource management
 RUN source /opt/ros/humble/setup.bash && \
-    MAKEFLAGS="-j4 -l2" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
+    MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/

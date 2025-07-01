@@ -51,9 +51,9 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(f"kuka_{robot_family.perform(context)}_support"),
+                    FindPackageShare(f"KR240R2900_description"),
                     "urdf",
-                    robot_model.perform(context) + ".urdf.xacro",
+                    "" + ".xacro",
                 ]
             ),
             " ",
@@ -163,8 +163,8 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
     launch_arguments = []
-    launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr6_r700_sixx"))
-    launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="agilus"))
+    launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr240r2900"))
+    launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="quantec"))
     launch_arguments.append(DeclareLaunchArgument("use_fake_hardware", default_value="false"))
     launch_arguments.append(DeclareLaunchArgument("namespace", default_value=""))
     launch_arguments.append(DeclareLaunchArgument("client_port", default_value="59152"))
