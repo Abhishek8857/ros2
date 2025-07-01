@@ -13,8 +13,6 @@ docker run \
 		--pid=host \
 		--ipc=host \
 		--privileged \
-        --gpus all \
-        --runtime=nvidia \
 		-v /dev:/dev \
 		-v $HOME/.ros/log:/.ros/log \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
