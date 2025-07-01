@@ -1,3 +1,0 @@
-robot_manager:
-  ros__parameters:
-    position_controller_name: "joint_trajectory_controller"
