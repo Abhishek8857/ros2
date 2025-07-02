@@ -8,6 +8,9 @@ ENV LC_ALL=C.UTF-8
 ENV ROS_DOMAIN_ID=0
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
+# Switch mirror if getting package metadata takes long
+RUN sed -i 's|http://.*.ubuntu.com|	http://de.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+
 # Update and install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -24,7 +27,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-dev-tools \
     ros-${ROS_DISTRO}-filters \
     ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
+    ros-${ROS_DISTRO}-ros-gz-sim \
+    ros-${ROS_DISTRO}-ros-gz-bridge \
+    ros-${ROS_DISTRO}-ros-gz-interfaces \
+    ros-${ROS_DISTRO}-gazebo-ros2-control \
+    ros-${ROS_DISTRO}-ign-ros2-control \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Setup locale
 RUN locale-gen en_US en_US.UTF-8 && \

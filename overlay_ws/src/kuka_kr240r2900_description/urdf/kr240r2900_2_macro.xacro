@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find kuka_kr240r2900_description)/urdf/kr_quantec_ros2_control.xacro"/>
+  <xacro:include filename="$(find kuka_kr240r2900_description)/urdf/kr_quantec_transmission.xacro"/>
+  <xacro:macro name="kr240r2900_2" params="client_ip client_port prefix use_fake_hardware roundtrip_time *origin">
+  <!-- ros2 control instance -->
+  <xacro:kuka_quantec_ros2_control name="${prefix}kr240r2900_2" client_ip="${client_ip}" client_port="${client_port}" prefix="${prefix}" use_fake_hardware="${use_fake_hardware}" roundtrip_time="${roundtrip_time}"/>
   <xacro:property name="world" value="world"/>
   <xacro:property name="transmission_actuator_hw_interface" value="EffortJointInterface"/>
   <xacro:property name="transmission_joint_hw_interface" value="hardware_interface/EffortJointInterface"/>
@@ -13,7 +18,7 @@
     <link name="${prefix}base_link">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/base_link.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/base_link.stl"/>
         </geometry>
         <origin rpy="0.0 -0.0 0.0" xyz="0.0 0.0 0.0"/>
       </collision>
@@ -24,7 +29,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/base_link.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/base_link.dae"/>
         </geometry>
         <origin rpy="0.0 -0.0 0.0" xyz="0.0 0.0 0.0"/>
       </visual>
@@ -33,7 +38,7 @@
     <link name="${prefix}link_1">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_1.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/link_1.stl"/>
         </geometry>
         <origin rpy="-3.141592653589793 0.0 -0.0" xyz="0.0 -3.742520618194312e-17 0.30560000000000004"/>
       </collision>
@@ -44,7 +49,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_1.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/link_1.dae"/>
         </geometry>
         <origin rpy="-3.141592653589793 0.0 -0.0" xyz="0.0 -3.742520618194312e-17 0.30560000000000004"/>
       </visual>
@@ -52,7 +57,7 @@
     <link name="${prefix}link_2">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_2.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/link_2.stl"/>
         </geometry>
         <origin rpy="1.5707963267948968 -0.0 1.5707963267948966" xyz="-0.645 -0.32999999999999996 0.07200000000000009"/>
       </collision>
@@ -63,7 +68,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_2.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/link_2.dae"/>
         </geometry>
         <origin rpy="1.5707963267948968 -0.0 1.5707963267948966" xyz="-0.645 -0.32999999999999996 0.07200000000000009"/>
       </visual>
@@ -71,7 +76,7 @@
     <link name="${prefix}link_3">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_3.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/link_3.stl"/>
         </geometry>
         <origin rpy="1.5707963267948968 -0.0 -0.0" xyz="-0.33000000000000007 1.995 0.1750000000000001"/>
       </collision>
@@ -82,7 +87,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_3.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/link_3.dae"/>
         </geometry>
         <origin rpy="1.5707963267948968 -0.0 -0.0" xyz="-0.33000000000000007 1.995 0.1750000000000001"/>
       </visual>
@@ -90,7 +95,7 @@
     <link name="${prefix}link_4">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_4.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/link_4.stl"/>
         </geometry>
         <origin rpy="1.8369701987210297e-16 1.5707963267948966 0.0" xyz="-2.11 1.2451666974470345e-17 1.158"/>
       </collision>
@@ -101,7 +106,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_4.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/link_4.dae"/>
         </geometry>
         <origin rpy="1.8369701987210297e-16 1.5707963267948966 0.0" xyz="-2.11 1.2451666974470345e-17 1.158"/>
       </visual>
@@ -109,7 +114,7 @@
     <link name="${prefix}link_5">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_5.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/link_5.stl"/>
         </geometry>
         <origin rpy="1.5707963267948968 -3.749399456654644e-33 -6.123233995736766e-17" xyz="-1.55 2.11 -0.1065"/>
       </collision>
@@ -120,7 +125,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_5.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/link_5.dae"/>
         </geometry>
         <origin rpy="1.5707963267948968 -3.749399456654644e-33 -6.123233995736766e-17" xyz="-1.55 2.11 -0.1065"/>
       </visual>
@@ -128,7 +133,7 @@
     <link name="${prefix}link_6">
       <collision>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/collision/link_6.stl"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/collision/link_6.stl"/>
         </geometry>
         <origin rpy="1.2246467991473532e-16 1.5707963267948966 0.0" xyz="-2.11 -1.233749536060084e-16 1.7194999999999998"/>
       </collision>
@@ -139,7 +144,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://kuka_robot_description/meshes/kr240r2900_2/visual/link_6.dae"/>
+          <mesh filename="package://kuka_kr240r2900_description/meshes/kr240r2900_2/visual/link_6.dae"/>
         </geometry>
         <origin rpy="1.2246467991473532e-16 1.5707963267948966 0.0" xyz="-2.11 -1.233749536060084e-16 1.7194999999999998"/>
       </visual>
