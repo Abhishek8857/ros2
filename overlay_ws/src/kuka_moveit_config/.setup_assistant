@@ -1,6 +1,6 @@
 moveit_setup_assistant_config:
   urdf:
-    package: kuka_robot_description
+    package: kr240r2900_2
     relative_path: urdf/kr240r2900_2.xacro
 
   srdf:

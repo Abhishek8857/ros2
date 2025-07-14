@@ -51,7 +51,7 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(f"kuka_kr240r2900_description"),
+                    FindPackageShare(f"kr240r2900_2"),
                     "urdf",
                     "kr240r2900_2" + ".xacro",
                 ]
