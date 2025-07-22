@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find kr240r2900_2)/urdf/kr_quantec_ros2_control.xacro"/>
+  <xacro:include filename="$(find kr240r2900_2)/urdf/kr_quantec_transmission.xacro"/>
   <xacro:property name="world" value="world"/>
   <xacro:property name="transmission_actuator_hw_interface" value="EffortJointInterface"/>
   <xacro:property name="transmission_joint_hw_interface" value="hardware_interface/EffortJointInterface"/>
@@ -8,7 +10,9 @@
   <xacro:property name="tool0_joint_type" value="fixed"/>
   <xacro:property name="base_joint_type" value="fixed"/>
   <xacro:property name="transmission_type" value="transmission_interface/SimpleTransmission"/>
-  <xacro:macro name="kr240r2900_2" params="prefix">
+  <xacro:macro name="kr240r2900_2" params="client_ip client_port prefix use_fake_hardware mode roundtrip_time *origin">
+    <!-- ros2 control instance -->
+    <xacro:kuka_quantec_ros2_control name="${prefix}kr240_r2900_2" client_ip="${client_ip}" client_port="${client_port}" prefix="${prefix}" use_fake_hardware="${use_fake_hardware}" roundtrip_time="${roundtrip_time}"/>
     <link name="${prefix}base"/>
     <link name="${prefix}base_link">
       <collision>

@@ -2,19 +2,24 @@ moveit_setup_assistant_config:
   urdf:
     package: kr240r2900_2
     relative_path: urdf/kr240r2900_2.xacro
-
   srdf:
     relative_path: config/kr240r2900_2.srdf
-
   package_settings:
     author_name: Abhishek Deshmukh
     author_email: abhishek.deshmukh@wzl-iqs.rwth-aachen.de
-    generated_timestamp: 1749628581
-
+    generated_timestamp: 1753176756
   control_xacro:
-    command: [position, velocity, effort]
-    state: [position, velocity, effort]
-
+    command:
+      - position
+    state:
+      - position
+      - velocity
   modified_urdf:
     xacros:
       - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

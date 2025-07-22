@@ -26,9 +26,9 @@ def launch_setup(context, *args, **kwargs):
     robot_model = LaunchConfiguration("robot_model")
     robot_family = LaunchConfiguration("robot_family")
     use_fake_hardware = LaunchConfiguration("use_fake_hardware")
+    mode = LaunchConfiguration("mode")
     client_ip = LaunchConfiguration("client_ip")
     client_port = LaunchConfiguration("client_port")
-    use_fake_hardware = LaunchConfiguration("use_fake_hardware")
     x = LaunchConfiguration("x")
     y = LaunchConfiguration("y")
     z = LaunchConfiguration("z")
@@ -51,14 +51,14 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(f"kuka_{robot_family.perform(context)}_support"),
+                    FindPackageShare(f"{robot_model.perform(context)}"),
                     "urdf",
-                    robot_model.perform(context) + ".urdf.xacro",
+                    robot_model.perform(context) + ".xacro",
                 ]
             ),
             " ",
-            "use_fake_hardware:=",
-            use_fake_hardware,
+            "mode:=",
+            mode,
             " ",
             "client_port:=",
             client_port,
@@ -89,11 +89,17 @@ def launch_setup(context, *args, **kwargs):
             " ",
             "roundtrip_time:=",
             roundtrip_time,
+            " ",
+            "use_fake_hardware:=",
+            use_fake_hardware,
         ],
         on_stderr="capture",
     )
 
     robot_description = {"robot_description": robot_description_content}
+
+    # The driver config contains only parameters that can be changed after startup
+    driver_config = get_package_share_directory("kuka_kss_rsi_driver") + "/config/driver_config.yaml"
 
     controller_manager_node = ns.perform(context) + "/controller_manager"
 
@@ -117,7 +123,7 @@ def launch_setup(context, *args, **kwargs):
         namespace=ns,
         package="kuka_kss_rsi_driver",
         executable="robot_manager_node",
-        parameters=[{"robot_model": robot_model}],
+        parameters=[driver_config, {"robot_model": robot_model}],
     )
     robot_state_publisher = Node(
         namespace=ns,
@@ -158,8 +164,9 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
     launch_arguments = []
-    launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr6_r700_sixx"))
-    launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="agilus"))
+    launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr240r2900_2"))
+    launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="quantec"))
+    launch_arguments.append(DeclareLaunchArgument("mode", default_value="hardware"))
     launch_arguments.append(DeclareLaunchArgument("use_fake_hardware", default_value="false"))
     launch_arguments.append(DeclareLaunchArgument("namespace", default_value=""))
     launch_arguments.append(DeclareLaunchArgument("client_port", default_value="59152"))

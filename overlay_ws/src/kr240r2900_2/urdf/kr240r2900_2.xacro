@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot name="kr240r2900_2" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find kr240r2900_2)/urdf/kr240r2900_2_macro.xacro"/>
-  <xacro:kr240r2900_2 prefix=""/>
+  
+  <!-- Read additional arguments  -->
+  <xacro:arg name="use_fake_hardware" default="true"/>
+  <xacro:arg name="mode" default="mock"/>
+  <xacro:arg name="roundtrip_time" default="0"/>
+  <xacro:arg name="client_ip" default="0.0.0.0"/>
+  <xacro:arg name="client_port" default="59152"/>
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="x" default="0"/>
+  <xacro:arg name="y" default="0"/>
+  <xacro:arg name="z" default="0"/>
+  <xacro:arg name="roll" default="0"/>
+  <xacro:arg name="pitch" default="0"/>
+  <xacro:arg name="yaw" default="0"/>
+  
+  <xacro:kr240r2900_2 client_ip="$(arg client_ip)" client_port="$(arg client_port)" prefix="$(arg prefix)" use_fake_hardware="$(arg use_fake_hardware)" roundtrip_time="$(arg roundtrip_time)" mode="$(arg mode)">
+    <origin xyz="$(arg x) $(arg y) $(arg z)" rpy="$(arg roll) $(arg pitch) $(arg yaw)"/>
+  </xacro:kr240r2900_2>
   <version>2024-11-08_16-30-13</version>
 </robot>

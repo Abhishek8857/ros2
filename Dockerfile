@@ -78,7 +78,7 @@ WORKDIR /overlay_ws/
 RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
 
 RUN source /opt/ros/humble/setup.bash && \
-   colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
+   colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --executor sequential
 
 # Entry point   
 CMD ["/bin/bash"]

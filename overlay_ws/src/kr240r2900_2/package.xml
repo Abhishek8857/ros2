@@ -31,11 +31,16 @@
   <depend>pluginlib</depend>
   <depend>transmission_interface</depend>
   <depend>urdf</depend>
+  <depend>xacro</depend>
   <depend>controller_interface</depend>
   <depend>control_toolbox</depend>
   <depend>joint_limits_interface</depend>
   <depend>robot_state_publisher</depend>
-
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>kuka_resources</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
   <export>
     <build_type>ament_cmake</build_type>
     <!-- <gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" gazebo_model_path="${prefix}/models"/> -->
