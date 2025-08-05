@@ -71,6 +71,9 @@ RUN source /opt/ros/humble/setup.bash && \
 COPY entrypoint_scripts/ /entrypoint_scripts/
 RUN chmod +x /entrypoint_scripts/*.sh
 
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | apt-key add -
+RUN echo "deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list && apt-get update 
+
 # Copy contents in overlay ws
 COPY overlay_ws/ /overlay_ws/
 WORKDIR /overlay_ws/
@@ -78,7 +81,14 @@ WORKDIR /overlay_ws/
 RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
 
 RUN source /opt/ros/humble/setup.bash && \
-   colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --executor sequential
+   colcon build --event-handlers desktop_notification- --cmake-clean-first \
+   --packages-ignore \
+   kuka_nrt_message_handler \ 
+   fri_configuration_controller \
+   kuka_rsi_driver \
+   examples \
+   kuka_kss_message_handler \
+   status- --cmake-args -DCMAKE_BUILD_TYPE=Release 
 
 # Entry point   
 CMD ["/bin/bash"]

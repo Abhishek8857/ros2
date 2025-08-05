@@ -199,8 +199,8 @@ def generate_launch_description():
     launch_arguments = []
     launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr240r2900_2"))
     launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="quantec"))
-    launch_arguments.append(DeclareLaunchArgument("mode", default_value="hardware"))
-    launch_arguments.append(DeclareLaunchArgument("use_fake_hardware", default_value="false"))
+    launch_arguments.append(DeclareLaunchArgument("mode", default_value="mock"))
+    launch_arguments.append(DeclareLaunchArgument("use_fake_hardware", default_value="true"))
     launch_arguments.append(DeclareLaunchArgument("namespace", default_value=""))
     launch_arguments.append(DeclareLaunchArgument("client_port", default_value="59152"))
     launch_arguments.append(DeclareLaunchArgument("client_ip", default_value="0.0.0.0")) # default: 192.168.1.27
