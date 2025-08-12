@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-ros-gz-sim \
     ros-${ROS_DISTRO}-ros-gz-bridge \
     ros-${ROS_DISTRO}-ros-gz-interfaces \
-    ros-${ROS_DISTRO}-moveit2 \
+    # ros-${ROS_DISTRO}-moveit2 \
     # ros-${ROS_DISTRO}-gazebo-ros2-control \
     # ros-${ROS_DISTRO}-ign-ros2-control \
     && rm -rf /var/lib/apt/lists/*
@@ -50,39 +50,42 @@ SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 
-# # Copy the entire colcon_ws and overlay_ws directory with the submodule into the Docker image
-# COPY colcon_ws/ /colcon_ws/
+# Copy the entire colcon_ws and overlay_ws directory with the submodule into the Docker image
+COPY colcon_ws/ /colcon_ws/
 
-# # Colcon workspace
-# WORKDIR /colcon_ws/src/
+# Colcon workspace
+WORKDIR /colcon_ws/src/
 
-# # Update package lists and import MoveIt repositories based on the specified ROS distribution
-# RUN apt-get update && \
-#     for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
-#         vcs import < "$repo"; \
-#     done && \
-#     rosdep install -r --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} -y
+# Update package lists and import MoveIt repositories based on the specified ROS distribution
+RUN apt-get update && \
+    for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
+        vcs import < "$repo"; \
+    done && \
+    rosdep install -r --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} -y
 
-# # Colcon workspace
-# WORKDIR /colcon_ws/
+# Colcon workspace
+WORKDIR /colcon_ws/
 
-# # Build the workspace with resource management
-# RUN source /opt/ros/humble/setup.bash && \
-#     MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
+# Build the workspace with resource management
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
+
+# SHELL ["/bin/bash", "-c"]
+# RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
+# RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/
 RUN chmod +x /entrypoint_scripts/*.sh
 
-
 # Copy contents in overlay ws
 COPY overlay_ws/ /overlay_ws/
 WORKDIR /overlay_ws/
 
-RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
+RUN rosdep install --from-paths src --ignore-src -r -y
 
-RUN source /opt/ros/humble/setup.bash && \
-   colcon build  \
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+   MAKEFLAGS="-j4 -l3" colcon build  \
    --event-handlers desktop_notification- console_cohesion- \
    --cmake-clean-first \
    --cmake-args -DCMAKE_BUILD_TYPE=Release 
