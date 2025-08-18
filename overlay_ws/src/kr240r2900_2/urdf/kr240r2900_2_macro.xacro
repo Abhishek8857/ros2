@@ -10,9 +10,9 @@
   <xacro:property name="tool0_joint_type" value="fixed"/>
   <xacro:property name="base_joint_type" value="fixed"/>
   <xacro:property name="transmission_type" value="transmission_interface/SimpleTransmission"/>
-  <xacro:macro name="kr240r2900_2" params="client_ip client_port prefix use_fake_hardware mode roundtrip_time *origin">
+  <xacro:macro name="kr240r2900_2" params="client_ip client_port prefix use_fake_hardware use_gpio mode roundtrip_time *origin">
     <!-- ros2 control instance -->
-    <xacro:kuka_quantec_ros2_control name="${prefix}kr240_r2900_2" client_ip="${client_ip}" client_port="${client_port}" prefix="${prefix}" use_fake_hardware="${use_fake_hardware}" roundtrip_time="${roundtrip_time}"/>
+    <xacro:kuka_quantec_ros2_control name="${prefix}kr240_r2900_2" client_ip="${client_ip}" client_port="${client_port}" prefix="${prefix}" use_fake_hardware="${use_fake_hardware}" roundtrip_time="${roundtrip_time}" use_gpio="$(use_gpio)"/>
     <link name="${prefix}base"/>
     <link name="${prefix}base_link">
       <collision>

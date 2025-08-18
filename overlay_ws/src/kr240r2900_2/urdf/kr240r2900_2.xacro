@@ -5,6 +5,7 @@
   <!-- Read additional arguments  -->
   <xacro:arg name="use_fake_hardware" default="true"/>
   <xacro:arg name="mode" default="mock"/>
+  <xacro:arg name="use_gpio" default="false"/>
   <xacro:arg name="roundtrip_time" default="0"/>
   <xacro:arg name="client_ip" default="0.0.0.0"/>
   <xacro:arg name="client_port" default="59152"/>

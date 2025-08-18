@@ -1,7 +1,11 @@
 #!/bin/bash
 
+set -e
+# Set ROS_DISTRO Variable
+ROS_DISTRO=jazzy 
+
 # Source the ROS2 installation
-source /opt/ros/humble/setup.bash
+source /opt/ros/${ROS_DISTRO}/setup.bash
 
 # Source the ROS2 colcon workspace
 source /colcon_ws/install/setup.bash
