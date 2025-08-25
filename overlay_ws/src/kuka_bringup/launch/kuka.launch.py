@@ -24,6 +24,7 @@ def launch_setup(context, *args, **kwargs):
     yaw = LaunchConfiguration("yaw")
     roundtrip_time = LaunchConfiguration("roundtrip_time")
     ns = LaunchConfiguration("namespace")
+    use_gpio = LaunchConfiguration("use_gpio")
     controller_config = LaunchConfiguration("controller_config")
     jtc_config = LaunchConfiguration("jtc_config")
     
@@ -39,7 +40,7 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(f"{robot_model.perform(context)}"),
+                    FindPackageShare("kr24or2900_2"),
                     "urdf",
                     robot_model.perform(context) + ".xacro",
                 ]
@@ -80,6 +81,8 @@ def launch_setup(context, *args, **kwargs):
             " ",
             "use_fake_hardware:=",
             use_fake_hardware,
+            "use_gpio:=",
+            use_gpio
         ],
         on_stderr="capture",
     )
@@ -100,6 +103,7 @@ def launch_setup(context, *args, **kwargs):
         .pilz_cartesian_limits() 
         .to_moveit_configs()
     )
+    
     moveit_config.robot_description = robot_description
     # moveit_config.moveit_cpp.update({"use_sim_time": use_sim_time.perform(context)=="true"})
     
@@ -201,6 +205,7 @@ def generate_launch_description():
     launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="quantec"))
     launch_arguments.append(DeclareLaunchArgument("mode", default_value="mock"))
     launch_arguments.append(DeclareLaunchArgument("use_fake_hardware", default_value="true"))
+    launch_arguments.append(DeclareLaunchArgument("use_gpio", default_value="false"))
     launch_arguments.append(DeclareLaunchArgument("namespace", default_value=""))
     launch_arguments.append(DeclareLaunchArgument("client_port", default_value="59152"))
     launch_arguments.append(DeclareLaunchArgument("client_ip", default_value="0.0.0.0")) # default: 192.168.1.27
