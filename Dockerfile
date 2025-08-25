@@ -1,4 +1,4 @@
-ARG ROS_DISTRO=jazzy
+ARG ROS_DISTRO=humble
 FROM osrf/ros:${ROS_DISTRO}-desktop
 
 # Set environment variables
@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-ros-gz-sim \
     ros-${ROS_DISTRO}-ros-gz-bridge \
     ros-${ROS_DISTRO}-ros-gz-interfaces \
+    ros-${ROS_DISTRO}-ros2-control \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -52,24 +53,21 @@ COPY colcon_ws/ /colcon_ws/
 WORKDIR /colcon_ws/src/
 
 # Update package lists and import MoveIt repositories based on the specified ROS distribution
-RUN apt-get update && \
-    for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
-        vcs import < "$repo"; \
-    done && \
-    vcs import --skip-existing --input ros2_kortex/ros2_kortex.$ROS_DISTRO.repos && \
-    vcs import --skip-existing --input ros2_kortex/ros2_kortex-not-released.$ROS_DISTRO.repos && \
-    rosdep install -r --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} -y
+# RUN apt-get update && \
+#     for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
+#         vcs import < "$repo"; \
+#     done && \
+#     vcs import --skip-existing --input ros2_kortex/ros2_kortex.$ROS_DISTRO.repos && \
+#     vcs import --skip-existing --input ros2_kortex/ros2_kortex-not-released.$ROS_DISTRO.repos && \
+#     rosdep install -r --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} -y
 
 # Colcon workspace
-WORKDIR /colcon_ws/
+# WORKDIR /colcon_ws/
 
-# Build the workspace with resource management
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
-    MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
+# # Build the workspace with resource management
+# RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+#     MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
 
-# SHELL ["/bin/bash", "-c"]
-# RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
-# RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/
@@ -79,10 +77,10 @@ RUN chmod +x /entrypoint_scripts/*.sh
 COPY overlay_ws/ /overlay_ws/
 WORKDIR /overlay_ws/
 
-RUN rosdep install --from-paths src --ignore-src -r -y
+RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
 
-RUN source /colcon_ws/install/setup.bash && \
-   MAKEFLAGS="-j4 -l3" colcon build  \
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash  && \
+    colcon build  \
    --event-handlers desktop_notification- console_cohesion- \
    --cmake-clean-first \
    --cmake-args -DCMAKE_BUILD_TYPE=Release 
