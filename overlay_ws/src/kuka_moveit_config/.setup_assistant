@@ -5,9 +5,9 @@ moveit_setup_assistant_config:
   srdf:
     relative_path: config/kr240r2900_2.srdf
   package_settings:
-    author_name: Abhishek Deshmukh
-    author_email: abhishek.deshmukh@wzl-iqs.rwth-aachen.de
-    generated_timestamp: 1753176756
+    author_name: Abhishek
+    author_email: abhishek.deshmukh@rwth-aachen.de
+    generated_timestamp: 1756212800
   control_xacro:
     command:
       - position

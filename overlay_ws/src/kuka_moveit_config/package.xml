@@ -6,7 +6,7 @@
   <description>
      An automatically generated package with all the configuration and launch files for using the kr240r2900_2 with the MoveIt Motion Planning Framework
   </description>
-  <maintainer email="abhishek.deshmukh@wzl-iqs.rwth-aachen.de">Abhishek Deshmukh</maintainer>
+  <maintainer email="abhishek.deshmukh@rwth-aachen.de">Abhishek</maintainer>
 
   <license>BSD</license>
 
@@ -14,14 +14,14 @@
   <url type="bugtracker">https://github.com/ros-planning/moveit2/issues</url>
   <url type="repository">https://github.com/ros-planning/moveit2</url>
 
-  <author email="abhishek.deshmukh@wzl-iqs.rwth-aachen.de">Abhishek Deshmukh</author>
+  <author email="abhishek.deshmukh@rwth-aachen.de">Abhishek</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-<!-- 
+
   <exec_depend>moveit_ros_move_group</exec_depend>
   <exec_depend>moveit_kinematics</exec_depend>
   <exec_depend>moveit_planners</exec_depend>
-  <exec_depend>moveit_simple_controller_manager</exec_depend> -->
+  <exec_depend>moveit_simple_controller_manager</exec_depend>
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>joint_state_publisher_gui</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
@@ -32,12 +32,12 @@
   <!-- <exec_depend>gazebo_ros_control</exec_depend> -->
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>kr240r2900_2</exec_depend>
-  <!-- <exec_depend>moveit_configs_utils</exec_depend>
+  <exec_depend>moveit_configs_utils</exec_depend>
   <exec_depend>moveit_ros_move_group</exec_depend>
   <exec_depend>moveit_ros_visualization</exec_depend>
   <exec_depend>moveit_ros_warehouse</exec_depend>
   <exec_depend>moveit_setup_assistant</exec_depend>
-  <exec_depend>robot_state_publisher</exec_depend> -->
+  <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>rviz_common</exec_depend>
   <exec_depend>rviz_default_plugins</exec_depend>
