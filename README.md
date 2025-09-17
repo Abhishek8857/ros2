@@ -13,13 +13,13 @@
 ### 1. Clone the Repo
 
 ``` sh 
-git clone --recurse-submodules https://git-ce.rwth-aachen.de/wzl-mq-ms/forschung-lehre/revamp/simulation-2.0.git
+git clone --recurse-submodules -b kuka_sim https://github.com/Abhishek8857/ros2.git
 ```
 
 If you’ve already cloned the repository without submodules, you can initialize and update the submodules like this:
 
 ```sh
-cd simulation-2.0
+cd ros2
 git submodule update --init --recursive
 ```
 
