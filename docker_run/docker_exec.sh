@@ -1,0 +1,1 @@
+docker exec -it kuka_sim bash 

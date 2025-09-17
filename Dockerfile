@@ -1,101 +1,83 @@
-ARG ROS_DISTRO=humble
-FROM osrf/ros:${ROS_DISTRO}-desktop-full
+ARG ROS_DISTRO=humble 
+FROM osrf/ros:${ROS_DISTRO}-desktop
 
-# Set environment variables
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LANG=C.UTF-8
-ENV LC_ALL=C.UTF-8
+# Source the workspace
+RUN echo "source /colcon_ws/install/setup.bash" >> ~/.bashrc
 
-# Remove old ROS 2 keys and source lists
-RUN rm -f /etc/apt/sources.list.d/ros2-latest.list && \
-    rm -f /usr/share/keyrings/ros2-latest-archive-keyring.gpg
+# Replace /bin/sh with /bin/bash
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-# Fix expired ROS GPG key
-RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2.list
+# Set the ROS Domain ID and Middleware
+ENV ROS_DOMAIN_ID=0 \
+    RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
+    GZ_SIM_RESOURCE_PATH=/overlay_ws/src
 
-# Update and install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    git \
+
+# Install required dependencies
+RUN apt-get update && apt-get install -y \
     wget \
-    curl \
-    gnupg2 \
     lsb-release \
-    locales \
-    python3-colcon-common-extensions \
-    python3-rosinstall-generator \
+    gnupg \
+    build-essential \
+    cmake \
+    ament-cmake \
     python3-pip \
+    python3-colcon-common-extensions \
     python3-vcstool \
-    python3-rosdep \
-    python3-pytest-cov \
-    libbullet-dev \
-    libasio-dev \
-    libtinyxml2-dev \
-    libcunit1-dev \
-    libacl1-dev \
-    libignition-common4-dev \
-    ros-humble-filters \
-    ros-humble-rmw-cyclonedds-cpp \
     ros-dev-tools \
-    ros-humble-ros-gz-bridge \
-    ros-humble-gazebo-ros-pkgs \
-    ros-humble-gazebo-ros2-control \
-    ros-humble-ign-ros2-control \
-    ros-humble-ros-gz-sim \
-    ros-humble-ros-gz-bridge \
-    && rm -rf /var/lib/apt/lists/*
-
-# Setup locale
-RUN locale-gen en_US en_US.UTF-8 && \
-    update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-
-# Install Ignition Fortress (Gazebo 6)
-RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" > /etc/apt/sources.list.d/gazebo-stable.list && \
-    wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
-    apt-get update && apt-get install -y ignition-fortress libignition-gazebo6-dev && \
-    rm -rf /var/lib/apt/lists/*
-
+    ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
+    ros-${ROS_DISTRO}-ign-ros2-control \
+    # clear all the cache and index files
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+          
 # Fix missing update
 RUN apt-get update --fix-missing -y
 
-# Source ROS setup
-SHELL ["/bin/bash", "-c"]
-RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-
 # Copy the entire colcon_ws  and overlay_ws directory with the submodule into the Docker image
 COPY colcon_ws/ /colcon_ws/
-WORKDIR /colcon_ws/src/
-
-# Update package lists and import MoveIt repositories based on the specified ROS distribution
-# RUN apt-get update && \
-#     for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do \
-#         vcs import < "$repo"; \
-#     done && \
-#     rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
-
 WORKDIR /colcon_ws/
 
-RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
+# Install Gazebo fortress
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
+    wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
+    apt-get update && sudo apt-get install -y ignition-fortress
 
-# Install dependencies
-# RUN rosdep install --from-paths src --ignore-src -r -y
+# Update package lists and import MoveIt repositories based on the specified ROS distribution
+RUN apt-get update && \
+    for repo in src/moveit2/moveit2.repos $(f="moveit2/moveit2_${ROS_DISTRO}.repos"; test -r $f && echo $f); do \
+        vcs import < "$repo"; \
+    done 
+
+# Install package dependancies
+RUN rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO}  -r -y
+
+# Args for build
+ARG LOW_MEMORY=false
+ARG MAKEFLAGS="-j4 -l3"
+ARG PARALLEL_WORKERS=3
+
 
 # Build the workspace with resource management
-# RUN source /opt/ros/humble/setup.bash && \
-#     MAKEFLAGS="-j4 -l2" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --symlink-install --executor sequential
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    if [ "${LOW_MEMORY}" = true ]; then \
+        echo "Low RAM build "; \
+        export MAKEFLAGS=${MAKEFLAGS} && \
+        colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install --parallel-workers ${PARALLEL_WORKERS}; \
+    else \
+        echo "Normal build"; \
+        colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --symlink-install; \
+    fi
 
-# Copy entrypoint scripts and make them executable
-COPY entrypoint_scripts/ /entrypoint_scripts/
-RUN chmod +x /entrypoint_scripts/*.sh
-
+# DEBUG: Additional PACKAGES
+RUN apt-get install -y ros-${ROS_DISTRO}-ros2controlcli
 
 # Copy contents in overlay ws
 COPY overlay_ws/ /overlay_ws/
+COPY /entrypoint_scripts /entrypoint_scripts/
 WORKDIR /overlay_ws/
 
-# RUN source /colcon_ws/install/setup.bash && \
-#     colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN rosdep install --from-paths src --ignore-src -r -y
 
-# Entry point   
-CMD ["/bin/bash"]
+RUN source /colcon_ws/install/setup.bash && \
+    colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
+

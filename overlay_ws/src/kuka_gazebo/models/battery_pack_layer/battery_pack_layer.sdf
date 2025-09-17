@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+    <model name="battery_pack_layer">
+        <link name="pack">
+            <inertial>
+                <mass>103.656</mass>
+                <inertia>
+                    <ixy>-8944.800e-6</ixy>
+                    <ixz>-694.8e-6</ixz>
+                    <iyz>47968.685e-6</iyz>
+                    <ixx>30730014.946e-6</ixx>
+                    <iyy>3133699.51e-6</iyy>
+                    <izz>33597452.934e-6</izz>
+                </inertia>
+            </inertial>
+
+            <collision name="collision">
+                <geometry>
+                    <mesh>
+                        <uri>models://visual/single_layer_pack.dae</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+            </collision>
+
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>models://visual/single_layer_pack.dae</uri>
+                        <!-- <scale>1 1 1</scale> -->
+                    </mesh>
+                </geometry>
+                <meta>
+                    <layer>1</layer>
+                </meta>
+            </visual>
+        </link>
+    </model>
+</sdf>

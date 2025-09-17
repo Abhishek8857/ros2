@@ -1,0 +1,1 @@
+kuka_motion_plan_action/Motionstate[] statemachinearray

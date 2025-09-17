@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="namespace" default="EIS"/>
+  <xacro:include filename="$(find eis_description)/urdf/kr240r2900_2_gripper.xacro"/>
+  <xacro:kr240r2900_2_gripper prefix="EIS"/>
+  <version>2024-11-08_16-30-13</version>
+</robot>

@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: eis_description
+    relative_path: urdf/kr240r2900_2.urdf.xacro
+  srdf:
+    relative_path: config/kr240r2900_2.srdf
+  package_settings:
+    author_name: Fabian Hankes
+    author_email: fabian.hankes@rwth-aachen.de
+    generated_timestamp: 1742807305
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

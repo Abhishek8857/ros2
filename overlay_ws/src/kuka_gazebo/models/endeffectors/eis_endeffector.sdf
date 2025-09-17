@@ -1,0 +1,157 @@
+<?xml version="1.0" ?>
+<sdf version='1.9'>
+  <model name='eis_endeffector'>
+    <link name='EISendeffector_base_link'>
+      <inertial>
+        <pose>0.039022 -0.005476 -0.001544 0 -0 0</pose>
+        <mass>2.661</mass>
+        <inertia>
+          <ixx>0.00826061</ixx>
+          <ixy>0.00195625</ixy>
+          <ixz>-0.00344196</ixz>
+          <iyy>0.0493837</iyy>
+          <iyz>0.000441021</iyz>
+          <izz>0.0556295</izz>
+        </inertia>
+      </inertial>
+      <collision name='EISendeffector_base_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/Endeffector.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='EISendeffector_base_link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/Endeffector.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='EISendeffector_plug_joint_1' type='fixed'>
+      <pose relative_to='EISendeffector_base_link'>0 0 0 0 -0 0</pose>
+      <parent>EISendeffector_base_link</parent>
+      <child>EISendeffector_plug_link_1</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-0.01</lower>
+          <upper>0.0338</upper>
+          <effort>50</effort>
+          <velocity>0.35</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='EISendeffector_plug_link_1'>
+      <pose relative_to='EISendeffector_plug_joint_1'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.185397 0.064928 -0.001898 0 -0 0</pose>
+        <mass>0.025</mass>
+        <inertia>
+          <ixx>6.791e-06</ixx>
+          <ixy>4e-09</ixy>
+          <ixz>1.39e-07</ixz>
+          <iyy>7.122e-06</iyy>
+          <iyz>-1.6e-08</iyz>
+          <izz>1.328e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='EISendeffector_plug_link_1_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/plug_1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='EISendeffector_plug_link_1_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/plug_1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='EISendeffector_plug_joint_2' type='fixed'>
+      <pose relative_to='EISendeffector_base_link'>0 0 0 0 -0 0</pose>
+      <parent>EISendeffector_base_link</parent>
+      <child>EISendeffector_plug_link_2</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-0.01</lower>
+          <upper>0.0338</upper>
+          <effort>50</effort>
+          <velocity>0.35</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='EISendeffector_plug_link_2'>
+      <pose relative_to='EISendeffector_plug_joint_2'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.199597 0.065499 0.01983 0 -0 0</pose>
+        <mass>0.044</mass>
+        <inertia>
+          <ixx>3.0555e-05</ixx>
+          <ixy>-4.07e-07</ixy>
+          <ixz>3.837e-06</ixz>
+          <iyy>3.5948e-05</iyy>
+          <iyz>5.3e-08</iyz>
+          <izz>7.16e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='EISendeffector_plug_link_2_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/plug_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='EISendeffector_plug_link_2_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/plug_2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <plugin filename="libignition-gazebo-detachable-joint-system.so"
+      name="ignition::gazebo::systems::DetachableJoint">
+      <parent_link>EISendeffector_base_link</parent_link>
+      <child_model>kr240r2900_2</child_model>
+      <child_link>omnibase_revolute</child_link>
+      <!-- Optional: customize topics -->
+      <detach_topic>/model/eisTCS/detach</detach_topic>
+      <attach_topic>/model/eisTCS/attach</attach_topic>
+    </plugin>
+    <plugin filename="libignition-gazebo-detachable-joint-system.so"
+      name="ignition::gazebo::systems::DetachableJoint">
+      <parent_link>EISendeffector_base_link</parent_link>
+      <child_model>kr240r2900_2</child_model>
+      <child_link>link_6</child_link>
+      <!-- Optional: customize topics -->
+      <detach_topic>/model/eisKUKA/detach</detach_topic>
+      <attach_topic>/model/eisKUKA/attach</attach_topic>
+    </plugin>
+  </model>
+</sdf>

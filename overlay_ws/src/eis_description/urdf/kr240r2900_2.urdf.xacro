@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="kr240r2900_2" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="controller_file" default="$(find kuka_moveit_config)/config/ros2_controllers.yaml"/>
+  <xacro:arg name="namespace" default=""/>
+  <xacro:include filename="$(find eis_description)/urdf/kr240r2900_2_macro.xacro"/>
+  <xacro:kr240r2900_2 prefix=""/>
+  <version>2024-11-08_16-30-13</version>
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <ros>
+          <namespace>$(arg namespace)</namespace>
+        </ros>
+        <robot_param>robot_description</robot_param>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+        <parameters>$(arg controller_file)</parameters>
+    </plugin>
+  </gazebo>
+</robot>

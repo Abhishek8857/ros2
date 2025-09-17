@@ -1,0 +1,69 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    kuka_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    plug_1_controller:
+      type: position_controllers/GripperActionController
+
+
+    plug_2_controller:
+      type: position_controllers/GripperActionController
+
+
+    omnibase_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    agv_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+kuka_arm_controller:
+  ros__parameters:
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - joint_6
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+plug_1_controller:
+  ros__parameters:
+    joint: endeffector_plug_joint_1
+plug_2_controller:
+  ros__parameters:
+    joint: endeffector_plug_joint_2
+omnibase_controller:
+  ros__parameters:
+    joints:
+      - omnibase_pris_x_joint
+      - omnibase_pris_y_joint
+      - omnibase_rev_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+agv_controller:
+  ros__parameters:
+    joints:
+      - agv_pris_x_joint
+      - agv_pris_y_joint
+      - agv_rev_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity

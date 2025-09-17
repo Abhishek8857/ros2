@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<sdf version='1.9'>
+    <model name="deckel">
+        <static>false</static>
+        <link name="deckel">
+            <inertial>
+                <mass>2.970</mass>
+                <inertia>
+                    <ixy>-0.0048</ixy>
+                    <ixz>0.00001</ixz>
+                    <iyz>0.00061</iyz>
+                    <ixx>0.970</ixx>
+                    <iyy>0.127</iyy>
+                    <izz>1.094</izz>
+                </inertia>
+            </inertial>
+
+            <collision name="collision">
+                <geometry>
+                    <mesh>
+                        <uri>package://kuka_gazebo/models/visual/Deckel.stl</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+            </collision>
+
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>package://kuka_gazebo/models/visual/Deckel.dae</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <meta>
+                    <layer>1</layer>
+                </meta>
+            </visual>
+        </link>
+        
+        <pose>2.0 2.0 1.0 -1.5707963267948966 0 0</pose>
+        <plugin filename="libignition-gazebo-detachable-joint-system.so"
+            name="ignition::gazebo::systems::DetachableJoint">
+            <parent_link>deckel</parent_link>
+            <child_model>battery_pack_frame</child_model>
+            <child_link>pack_frame</child_link>
+            <detach_topic>/model/deckel/detach</detach_topic>
+            <attach_topic>/model/deckel/attach</attach_topic>
+        </plugin>
+        <plugin filename="libignition-gazebo-detachable-joint-system.so"
+            name="ignition::gazebo::systems::DetachableJoint">
+            <parent_link>deckel</parent_link>
+            <child_model>Vakuumgreifer</child_model>
+            <child_link>Vakuumgreifer_base_link</child_link>
+            <detach_topic>/model/deckelVakuum/detach</detach_topic>
+            <attach_topic>/model/deckelVakuum/attach</attach_topic>
+        </plugin>
+    </model>
+</sdf>

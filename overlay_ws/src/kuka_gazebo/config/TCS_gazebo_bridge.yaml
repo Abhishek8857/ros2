@@ -1,0 +1,22 @@
+parameter_bridge:
+  ros__parameters:
+    bridges:
+      - topic_name: "/model/eisKUKA/detach"
+        ros_type_name: "std_msgs/msg/Empty"
+        gz_type_name: "ignition.msgs.Empty"
+        direction: "bidirectional"
+
+      - topic_name: "/model/eisKUKA/attach"
+        ros_type_name: "std_msgs/msg/Empty"
+        gz_type_name: "ignition.msgs.Empty"
+        direction: "bidirectional"
+
+      - topic_name: "/model/eisTCS/detach"
+        ros_type_name: "std_msgs/msg/Empty"
+        gz_type_name: "ignition.msgs.Empty"
+        direction: "bidirectional"
+
+      - topic_name: "/model/eisTCS/attach"
+        ros_type_name: "std_msgs/msg/Empty"
+        gz_type_name: "ignition.msgs.Empty"
+        direction: "bidirectional"

@@ -1,0 +1,13 @@
+# Goal
+int32 planning_group
+geometry_msgs/PoseStamped goal_pose
+float32 plug_pose
+string planner
+string named_target
+---
+# Result
+string result_message
+
+---
+# Feedback
+float32 progress

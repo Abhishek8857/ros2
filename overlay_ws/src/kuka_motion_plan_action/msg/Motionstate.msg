@@ -1,0 +1,2 @@
+string operation
+geometry_msgs/PoseStamped pose

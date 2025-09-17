@@ -1,0 +1,643 @@
+<sdf version='1.7'>
+  <model name='kr240r2900_2'>
+    <joint name='agv_pris_x_joint' type='prismatic'>
+      <pose relative_to='__model__'>2 2 0 -1.5708 0 0</pose>
+      <parent>world</parent>
+      <child>agv_prismatic_x</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-10</lower>
+          <upper>10</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='agv_prismatic_x'>
+      <pose relative_to='agv_pris_x_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 406.05 0 -0 0</pose>
+        <mass>4390</mass>
+        <inertia>
+          <ixx>4235.7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1613.1</iyy>
+          <iyz>0</iyz>
+          <izz>5365.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='agv_prismatic_x_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/omnimove_simplified_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    <joint name='agv_pris_y_joint' type='prismatic'>
+      <pose relative_to='agv_prismatic_x'>0 0 0 0 -0 0</pose>
+      <parent>agv_prismatic_x</parent>
+      <child>agv_prismatic_y</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-10</lower>
+          <upper>10</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='agv_prismatic_y'>
+      <pose relative_to='agv_pris_y_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 406.05 0 -0 0</pose>
+        <mass>4390</mass>
+        <inertia>
+          <ixx>4235.7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1613.1</iyy>
+          <iyz>0</iyz>
+          <izz>5365.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='agv_prismatic_y_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/omnimove_simplified_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    <joint name='agv_rev_joint' type='revolute'>
+      <pose relative_to='agv_prismatic_y'>0 0 0 0 -0 0</pose>
+      <parent>agv_prismatic_y</parent>
+      <child>agv_revolute</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-3.22886</lower>
+          <upper>3.22886</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='agv_revolute'>
+      <pose relative_to='agv_rev_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 406.05 0 -0 0</pose>
+        <mass>4390</mass>
+        <inertia>
+          <ixx>4235.7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1613.1</iyy>
+          <iyz>0</iyz>
+          <izz>5365.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='agv_revolute_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/omnimove_simplified_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='agv_revolute_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/omnimove_simplified_2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='omnibase_pris_x_joint' type='prismatic'>
+      <pose relative_to='__model__'>-0.89567 -0.00247 0 0 -0 0</pose>
+      <parent>world</parent>
+      <child>omnibase_prismatic_x</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-10</lower>
+          <upper>10</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='omnibase_prismatic_x'>
+      <pose relative_to='omnibase_pris_x_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 406.05 0 -0 0</pose>
+        <mass>4390</mass>
+        <inertia>
+          <ixx>4235.7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1613.1</iyy>
+          <iyz>0</iyz>
+          <izz>5365.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='omnibase_prismatic_x_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/omnimove_simplified_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    <joint name='omnibase_pris_y_joint' type='prismatic'>
+      <pose relative_to='omnibase_prismatic_x'>0 0 0 0 -0 0</pose>
+      <parent>omnibase_prismatic_x</parent>
+      <child>omnibase_prismatic_y</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-10</lower>
+          <upper>10</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='omnibase_prismatic_y'>
+      <pose relative_to='omnibase_pris_y_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 406.05 0 -0 0</pose>
+        <mass>4390</mass>
+        <inertia>
+          <ixx>4235.7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1613.1</iyy>
+          <iyz>0</iyz>
+          <izz>5365.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='omnibase_prismatic_y_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/omnimove_simplified_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    <joint name='omnibase_rev_joint' type='revolute'>
+      <pose relative_to='omnibase_prismatic_y'>0 0 0 0 -0 0</pose>
+      <parent>omnibase_prismatic_y</parent>
+      <child>omnibase_revolute</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-3.22886</lower>
+          <upper>3.22886</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='omnibase_revolute'>
+      <pose relative_to='omnibase_rev_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-0.035797 -0.00256 368.233 0 -0 0</pose>
+        <mass>4841.92</mass>
+        <inertia>
+          <ixx>6.72688e+07</ixx>
+          <ixy>-21.5318</ixy>
+          <ixz>-63571.2</ixz>
+          <iyy>6.72669e+07</iyy>
+          <iyz>-4551.57</iyz>
+          <izz>6125.67</izz>
+        </inertia>
+      </inertial>
+      <collision name='omnibase_revolute_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/omnimove_simplified_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='omnibase_revolute_fixed_joint_lump__TCS_link_collision_1'>
+        <pose>-1.4 0 1.065 -1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/WWS.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='omnibase_revolute_fixed_joint_lump__base_link_collision_2'>
+        <pose>0.89567 0.00247 0.491 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/base_link.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='omnibase_revolute_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/omnimove_simplified_2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='omnibase_revolute_fixed_joint_lump__TCS_link_visual_1'>
+        <pose>-1.4 0 1.065 -1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/WWS.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='omnibase_revolute_fixed_joint_lump__base_link_visual_2'>
+        <pose>0.89567 0.00247 0.491 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/base_link.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_1' type='revolute'>
+      <pose relative_to='omnibase_revolute'>0.89567 0.00247 0.7966 3.14159 -0 0</pose>
+      <parent>omnibase_revolute</parent>
+      <child>link_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-3.22886</lower>
+          <upper>3.22886</upper>
+          <effort>7290</effort>
+          <velocity>1.79769</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='link_1'>
+      <pose relative_to='joint_1'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.028263 0.011135 -0.235337 -0.351197 -1.27485 -1.45147</pose>
+        <mass>367.37</mass>
+        <inertia>
+          <ixx>31.7863</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>13.331</iyy>
+          <iyz>0</iyz>
+          <izz>34.1807</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_1_collision'>
+        <pose>0 -0 0.3056 -3.14159 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/link_1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_1_visual'>
+        <pose>0 -0 0.3056 -3.14159 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/link_1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_2' type='revolute'>
+      <pose relative_to='link_1'>0.33 0.072 -0.3394 1.5708 -0 0</pose>
+      <parent>link_1</parent>
+      <child>link_2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-2.44346</lower>
+          <upper>-0.244346</upper>
+          <effort>9240</effort>
+          <velocity>1.64061</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='link_2'>
+      <pose relative_to='joint_2'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.577871 -0.001385 -0.125572 0.537628 0.090674 0.007191</pose>
+        <mass>250.56</mass>
+        <inertia>
+          <ixx>6.11157</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>82.7509</iyy>
+          <iyz>0</iyz>
+          <izz>83.2586</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_2_collision'>
+        <pose>-0.645 -0.33 0.072 1.5708 -0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/link_2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_2_visual'>
+        <pose>-0.645 -0.33 0.072 1.5708 -0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/link_2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_3' type='revolute'>
+      <pose relative_to='link_2'>1.35 0 -0.103 0 -0 0</pose>
+      <parent>link_2</parent>
+      <child>link_3</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-2.0944</lower>
+          <upper>2.93215</upper>
+          <effort>7295.42</effort>
+          <velocity>1.74533</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='link_3'>
+      <pose relative_to='joint_3'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.172685 -0.075487 0.137132 2.16697 -0.063842 -0.054172</pose>
+        <mass>191.53</mass>
+        <inertia>
+          <ixx>3.51167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>21.2369</iyy>
+          <iyz>0</iyz>
+          <izz>22.2568</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_3_collision'>
+        <pose>-0.33 1.995 0.175 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/link_3.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_3_visual'>
+        <pose>-0.33 1.995 0.175 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/link_3.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_4' type='revolute'>
+      <pose relative_to='link_3'>0.828 -0.115 0.175 1.5708 0 -1.5708</pose>
+      <parent>link_3</parent>
+      <child>link_4</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.10865</lower>
+          <upper>6.10865</upper>
+          <effort>2323.71</effort>
+          <velocity>2.96706</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='link_4'>
+      <pose relative_to='joint_4'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-9e-06 0.030038 -0.22035 1.57099 -1.39128 -1.57106</pose>
+        <mass>47.9428</mass>
+        <inertia>
+          <ixx>0.201148</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.6156</iyy>
+          <iyz>0</iyz>
+          <izz>1.64042</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_4_collision'>
+        <pose>-2.11 0 1.158 0 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/link_4.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_4_visual'>
+        <pose>-2.11 0 1.158 0 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/link_4.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_5' type='revolute'>
+      <pose relative_to='link_4'>0 0.1065 -0.392 -1.5708 1.5708 0</pose>
+      <parent>link_4</parent>
+      <child>link_5</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-2.13803</lower>
+          <upper>2.13803</upper>
+          <effort>2326.03</effort>
+          <velocity>2.25147</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='link_5'>
+      <pose relative_to='joint_5'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.062409 0.000211 -0.064058 1.62245 -0.931997 -0.064885</pose>
+        <mass>23.6876</mass>
+        <inertia>
+          <ixx>0.34306</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.196893</iyy>
+          <iyz>0</iyz>
+          <izz>0.347976</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_5_collision'>
+        <pose>-1.55 2.11 -0.1065 1.5708 -0 -0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/link_5.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_5_visual'>
+        <pose>-1.55 2.11 -0.1065 1.5708 -0 -0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/link_5.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_6' type='revolute'>
+      <pose relative_to='link_5'>0.1695 0 -0.1065 1.5708 0 -1.5708</pose>
+      <parent>link_5</parent>
+      <child>link_6</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.10865</lower>
+          <upper>6.10865</upper>
+          <effort>1492.86</effort>
+          <velocity>3.59538</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='link_6'>
+      <pose relative_to='joint_6'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-6.9e-05 -0.390237 -0.058131 0.000108 -9.8e-05 -0.033105</pose>
+        <mass>19.0037</mass>
+        <inertia>
+          <ixx>5.3569</ixx>
+          <ixy>0.172762</ixy>
+          <ixz>0.0144063</ixz>
+          <iyy>0.115943</iyy>
+          <iyz>-0.438428</iyz>
+          <izz>5.33737</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_6_collision'>
+        <pose>-2.11 -0 1.7195 0 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/link_6.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='link_6_fixed_joint_lump__flange_collision_1'>
+        <pose>-0.1175 -0.1175 0 -1.5708 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/Flansch.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_6_visual'>
+        <pose>-2.11 -0 1.7195 0 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/link_6.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='link_6_fixed_joint_lump__flange_visual_1'>
+        <pose>-0.1175 -0.1175 0 -1.5708 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/Flansch.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <static>0</static>
+  <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <ros>
+        <namespace/>
+      </ros>
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+      <parameters>/home/hiwi/hankes/main_ws/install/kuka_moveit_config/share/kuka_moveit_config/config/ros2_controller.yaml</parameters>
+    </plugin>
+  </model>
+</sdf>

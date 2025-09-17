@@ -1,0 +1,126 @@
+<sdf version='1.7'>
+  <model name='gripper'>
+    <link name='EISgripper_link'>
+      <inertial>
+        <pose>3.1e-05 -0.000102 0.162402 0 -0 0</pose>
+        <mass>18.649</mass>
+        <inertia>
+          <ixx>0.45173</ixx>
+          <ixy>0.000175904</ixy>
+          <ixz>0.000154055</ixz>
+          <iyy>0.297205</iyy>
+          <iyz>-3.42726e-05</iyz>
+          <izz>0.248172</izz>
+        </inertia>
+      </inertial>
+      <collision name='EISgripper_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/greifer_gruppe1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='EISgripper_link_fixed_joint_lump__EISfinger_link1_collision_1'>
+        <pose>0.0673 -0.4006 0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/greifer_finger1_02_75.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='EISgripper_link_fixed_joint_lump__EISfinger_link2_collision_2'>
+        <pose>-0.0693 -0.4006 0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/greifer_finger1_01_75.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='EISgripper_link_fixed_joint_lump__EISfinger_link3_collision_3'>
+        <pose>0.0673 -0.4006 -0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/greifer_finger1_02_75.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='EISgripper_link_fixed_joint_lump__EISfinger_link4_collision_4'>
+        <pose>-0.0693 -0.4006 -0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/collision/greifer_finger1_01_75.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='EISgripper_link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/greifer_gruppe1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='EISgripper_link_fixed_joint_lump__EISfinger_link1_visual_1'>
+        <pose>0.0673 -0.4006 0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/greifer_finger1_02_75.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='EISgripper_link_fixed_joint_lump__EISfinger_link2_visual_2'>
+        <pose>-0.0703 -0.4006 0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/greifer_finger1_01_75.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='EISgripper_link_fixed_joint_lump__EISfinger_link3_visual_3'>
+        <pose>0.0673 -0.4006 -0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/greifer_finger1_02_75.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='EISgripper_link_fixed_joint_lump__EISfinger_link4_visual_4'>
+        <pose>-0.0703 -0.4006 -0.1873 -0.000204 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://eis_description/meshes/kr240r2900_2/visual/greifer_finger1_01_75.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <plugin filename="libignition-gazebo-detachable-joint-system.so"
+      name="ignition::gazebo::systems::DetachableJoint">
+      <parent_link>EISgripper_link</parent_link>
+      <child_model>kr240r2900_2</child_model>
+      <child_link>omnibase_revolute</child_link>
+      <!-- Optional: customize topics -->
+      <detach_topic>/model/gripperTCS/detach</detach_topic>
+      <attach_topic>/model/gripperTCS/attach</attach_topic>
+    </plugin>
+    <plugin filename="libignition-gazebo-detachable-joint-system.so"
+      name="ignition::gazebo::systems::DetachableJoint">
+      <parent_link>EISgripper_link</parent_link>
+      <child_model>kr240r2900_2</child_model>
+      <child_link>link_6</child_link>
+      <!-- Optional: customize topics -->
+      <detach_topic>/model/gripperKUKA/detach</detach_topic>
+      <attach_topic>/model/gripperKUKA/attach</attach_topic>
+    </plugin>
+  </model>
+</sdf>

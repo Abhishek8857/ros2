@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<robot name="Vakuumgreifer">
+  <link name="Vakuumgreifer_base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://eis_description/meshes/kr240r2900_2/visual/Vakuumgreifer.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://eis_description/meshes/kr240r2900_2/collision/Vakuumgreier.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="39.022e-3 -5.476e-03 -1.544e-3"/>
+      <mass value="2.661"/>
+      <inertia ixx="82735.446e-6" ixy="118.529e-6" ixz="21.785e-6" iyy="386642.135e-6" iyz="-7.237e-6" izz="461206.723e-6"/>
+    </inertial>
+  </link>
+  <version>2024-11-08_16-30-13</version>
+</robot>
