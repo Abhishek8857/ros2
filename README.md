@@ -63,3 +63,13 @@ ros2 lifecycle set robot_manager activate
 
 
 
+### Changes done in packages:
+- `kuka_drivers` : 
+    1. GPIO code has been uncommented to allow input/output commands for the TCP
+    2. Timeout has been changed from 10 to 30 in `robot_manager_node_rsi_only.cpp` and `hardware_interface_rsi_only.cpp`
+- `kuka_external_control_sdk`
+    1. Added IP address of the PC in `rsi_ethernet.xml` 
+
+## TODO's
+- [ ] Edit the URDF with the updated `kuka_robot_description` files
+- [ ] Create Moveit config files for the arm
