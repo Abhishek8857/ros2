@@ -227,7 +227,7 @@ def generate_launch_description():
         )
     )
     launch_arguments.append(DeclareLaunchArgument("namespace", default_value=""))
-    launch_arguments.append(DeclareLaunchArgument("client_ip", default_value="192.168.1.27"))
+    launch_arguments.append(DeclareLaunchArgument("client_ip", default_value="0.0.0.0"))
     launch_arguments.append(DeclareLaunchArgument("client_port", default_value="59152"))
     launch_arguments.append(DeclareLaunchArgument("controller_ip", default_value="0.0.0.0"))
     launch_arguments.append(DeclareLaunchArgument("x", default_value="0"))

@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-vcstool \
     python3-rosdep \
     ros-dev-tools \
+    iputils-ping \
     ros-${ROS_DISTRO}-filters \
     ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
     ros-${ROS_DISTRO}-ros-gz-sim \

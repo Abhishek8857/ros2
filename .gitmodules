@@ -1,0 +1,11 @@
+[submodule "overlay_ws/src/kuka_drivers"]
+	path = overlay_ws/src/kuka_drivers
+	url = https://github.com/Abhishek8857/kuka_drivers.git
+	branch = humble
+[submodule "overlay_ws/src/kuka_robot_descriptions"]
+	path = overlay_ws/src/kuka_robot_descriptions
+	url = https://github.com/Abhishek8857/kuka_robot_descriptions.git
+	branch = humble
+[submodule "overlay_ws/src/kuka-external-control-sdk"]
+	path = overlay_ws/src/kuka-external-control-sdk
+	url = https://github.com/Abhishek8857/kuka-external-control-sdk.git
