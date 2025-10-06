@@ -9,3 +9,7 @@
 [submodule "overlay_ws/src/kuka-external-control-sdk"]
 	path = overlay_ws/src/kuka-external-control-sdk
 	url = https://github.com/Abhishek8857/kuka-external-control-sdk.git
+[submodule "colcon_ws/src/rviz"]
+	path = colcon_ws/src/rviz
+	url = https://github.com/ros2/rviz.git
+	branch = humble
