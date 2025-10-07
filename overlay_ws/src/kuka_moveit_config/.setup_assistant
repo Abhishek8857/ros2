@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: kr240_r2900_2
+    relative_path: urdf/kr240_r2900_2.urdf.xacro
+  srdf:
+    relative_path: config/kr240_r2900_2.srdf
+  package_settings:
+    author_name: Abhishek Deshmukh
+    author_email: abhishek.deshmukh@wzl-iqs.rwth-aachen.de
+    generated_timestamp: 1759842078

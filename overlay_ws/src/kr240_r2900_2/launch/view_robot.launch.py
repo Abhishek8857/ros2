@@ -5,7 +5,7 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
-    package_name = "kr240r2900_2"
+    package_name = "kr240_r2900_2"
 
     urdf_path = PathJoinSubstitution([
         FindPackageShare(package_name),

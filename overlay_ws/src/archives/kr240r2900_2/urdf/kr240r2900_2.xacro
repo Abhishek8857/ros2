@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="kr240r2900_2" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find kr240r2900_2)/urdf/kr240r2900_2_macro.xacro"/>
+  <xacro:kr240r2900_2 prefix=""/>
+  <version>2024-11-08_16-30-13</version>
+</robot>

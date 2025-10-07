@@ -51,7 +51,7 @@ RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
 COPY colcon_ws/ /colcon_ws/
 
 # Colcon workspace
-WORKDIR /colcon_ws/src/
+WORKDIR /colcon_ws/
 
 # Update package lists and import MoveIt repositories based on the specified ROS distribution
 # RUN apt-get update && \
@@ -65,10 +65,12 @@ WORKDIR /colcon_ws/src/
 # Colcon workspace
 # WORKDIR /colcon_ws/
 
-# # Build the workspace with resource management
-# RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
-#     MAKEFLAGS="-j4 -l3" colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 
-
+# Build the workspace with resource management
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    colcon build  \
+    --event-handlers desktop_notification- console_cohesion- \
+   --cmake-clean-first \
+   --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --executor sequential
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/
@@ -80,7 +82,7 @@ WORKDIR /overlay_ws/
 
 RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros_mongo
 
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash  && \
+RUN source /colcon_ws/install/setup.bash  && \
     colcon build  \
    --event-handlers desktop_notification- console_cohesion- \
    --cmake-clean-first \

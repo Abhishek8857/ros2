@@ -16,21 +16,14 @@
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch.substitutions import (
-    Command,
-    FindExecutable,
-    LaunchConfiguration,
-    PathJoinSubstitution,
-)
-from launch_ros.actions import LifecycleNode, Node
+from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
+from launch_ros.actions import Node, LifecycleNode
 from launch_ros.substitutions import FindPackageShare
-from moveit_configs_utils import MoveItConfigsBuilder
+
 
 def launch_setup(context, *args, **kwargs):
-    rviz_config = LaunchConfiguration("rviz_config")
     robot_model = LaunchConfiguration("robot_model")
     robot_family = LaunchConfiguration("robot_family")
-    use_fake_hardware = LaunchConfiguration("use_fake_hardware")
     mode = LaunchConfiguration("mode")
     use_gpio = LaunchConfiguration("use_gpio")
     driver_version = LaunchConfiguration("driver_version")
@@ -71,14 +64,11 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(f"kr240r2900_2"),
+                    FindPackageShare(f"kr240_r2900_2"),
                     "urdf",
-                    "kr240r2900_2.xacro",
+                    robot_model.perform(context) + ".urdf.xacro",
                 ]
             ),
-            " ",
-            "use_fake_hardware:=",
-            use_fake_hardware,
             " ",
             "mode:=",
             mode,
@@ -120,7 +110,10 @@ def launch_setup(context, *args, **kwargs):
             yaw,
             " ",
             "roundtrip_time:=",
-            roundtrip_time
+            roundtrip_time,
+            " ",
+            "verify_robot_model:=",
+            verify_robot_model,
         ],
         on_stderr="capture",
     )
@@ -139,6 +132,8 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             robot_description,
             controller_config,
+            jtc_config,
+            gpio_config,
             {
                 "hardware_components_initial_state": {
                     "unconfigured": [tf_prefix + robot_model.perform(context)]
@@ -157,7 +152,6 @@ def launch_setup(context, *args, **kwargs):
         ),
         parameters=[driver_config, {"robot_model": robot_model, "use_gpio": use_gpio}],
     )
-    
     robot_state_publisher = Node(
         namespace=ns,
         package="robot_state_publisher",
@@ -165,41 +159,31 @@ def launch_setup(context, *args, **kwargs):
         output="both",
         parameters=[robot_description],
     )
-    
-    # Rviz Config
 
     # Spawn controllers
-    def controller_spawner(controller_name, param_file=None, activate=False):
+    def controller_spawner(controller_names, activate=False):
         arg_list = [
-            controller_name,
+            controller_names,
             "-c",
             controller_manager_node,
             "-n",
             ns,
         ]
-
-        # Add param-file if it's provided
-        if param_file:
-            arg_list.extend(["--param-file", param_file])
-
         if not activate:
             arg_list.append("--inactive")
-
         return Node(package="controller_manager", executable="spawner", arguments=arg_list)
 
-    controllers = {"joint_state_broadcaster": None, "joint_trajectory_controller": jtc_config}
+    controller_names = ["joint_state_broadcaster", "joint_trajectory_controller"]
 
     if use_gpio.perform(context) == "true":
-        controllers["gpio_controller"] = gpio_config
+        controller_names.append("gpio_controller")
 
     if driver_version.perform(context) == "eki_rsi":
-        controllers["control_mode_handler"] = None
-        controllers["event_broadcaster"] = None
-        controllers["kss_message_handler"] = None
+        controller_names.append("control_mode_handler")
+        controller_names.append("event_broadcaster")
+        controller_names.append("kss_message_handler")
 
-    controller_spawners = [
-        controller_spawner(name, param_file) for name, param_file in controllers.items()
-    ]
+    controller_spawners = [controller_spawner(name) for name in controller_names]
 
     nodes_to_start = [
         control_node,
@@ -212,7 +196,7 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
     launch_arguments = []
-    launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr240r2900_2"))
+    launch_arguments.append(DeclareLaunchArgument("robot_model", default_value="kr240_r2900_2"))
     launch_arguments.append(DeclareLaunchArgument("robot_family", default_value="quantec"))
     launch_arguments.append(DeclareLaunchArgument("mode", default_value="hardware"))
     launch_arguments.append(
@@ -237,7 +221,6 @@ def generate_launch_description():
     launch_arguments.append(DeclareLaunchArgument("pitch", default_value="0"))
     launch_arguments.append(DeclareLaunchArgument("yaw", default_value="0"))
     launch_arguments.append(DeclareLaunchArgument("roundtrip_time", default_value="4000"))
-    launch_arguments.append(DeclareLaunchArgument("use_fake_hardware", default_value="false"))
     launch_arguments.append(
         DeclareLaunchArgument(
             "verify_robot_model", default_value="true", choices=["true", "false"]

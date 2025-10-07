@@ -1,0 +1,13 @@
+<launch>
+  <let name="package_name" value="kr240r2900_2" />
+  <let name="urdf_path" value="$(find-pkg-share $(var package_name))/urdf/$(var package_name).xacro" />
+  <let name="rviz_config" value="$(find-pkg-share $(var package_name))/rviz/rviz.rviz" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" exec="robot_state_publisher">
+    <param name="robot_description" value="$(command 'xacro $(var urdf_path)')" />    
+  </node>
+  
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
+
+  <node name="rviz2" pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config)" />
+</launch>
