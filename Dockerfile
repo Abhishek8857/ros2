@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-ros-gz-bridge \
     ros-${ROS_DISTRO}-ros-gz-interfaces \
     ros-${ROS_DISTRO}-ros2-control \
+    ros-${ROS_DISTRO}-sick-safetyscanners2-interfaces \
+    ros-${ROS_DISTRO}-sick-safetyscanners-base \
     && rm -rf /var/lib/apt/lists/*
 
 

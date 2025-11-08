@@ -20,6 +20,7 @@ from launch.substitutions import LaunchConfiguration
 
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
+from moveit_configs_utils import MoveItConfigsBuilder
 
 
 def launch_setup(context, *args, **kwargs):
@@ -27,11 +28,33 @@ def launch_setup(context, *args, **kwargs):
     robot_family = LaunchConfiguration("robot_family")
     dof = LaunchConfiguration("dof")
 
-    rviz_config_file = (
-        get_package_share_directory("kuka_resources")
-        + f"/config/planning_{dof.perform(context)}_axis.rviz"
-    )
+    rviz_config_file = PathJoinSubstitution([
+            FindPackageShare("kuka_moveit_config"),
+            "config",
+            "moveit.rviz"
+        ])
 
+    moveit_config = (      
+        MoveItConfigsBuilder(robot_name="kr240_r2900_2", package_name="kuka_moveit_config")
+        .robot_description_semantic(
+            get_package_share_directory("kuka_moveit_config")
+            + "/config/kr240_r2900_2.srdf"
+        )     
+        .robot_description_kinematics(file_path="config/kinematics.yaml")
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .planning_scene_monitor(publish_robot_description=True, 
+                                publish_robot_description_semantic=True)
+        .planning_pipelines(pipelines=["ompl", "pilz_industrial_motion_planner"])
+        .pilz_cartesian_limits() 
+        .to_moveit_configs()
+    )
+    
+    move_group_node = Node(
+        package="moveit_ros_move_group",
+        executable="move_group",
+        output="screen",
+        parameters=[moveit_config.to_dict()]
+    )
     # Get URDF via xacro
     robot_description_content = Command(
         [
@@ -39,9 +62,10 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(f"kuka_{robot_family.perform(context)}_support"),
+                    FindPackageShare(f"kr240_r2900_2"),
                     "urdf",
-                    robot_model.perform(context) + ".urdf.xacro",
+                    # "kr240_r2900_2" + ".urdf.xacro",
+                    "omnimove_with_kr240_r2900_2" + ".urdf.xacro"
                 ]
             ),
             " ",
@@ -64,14 +88,16 @@ def launch_setup(context, *args, **kwargs):
         executable="ros2_control_node",
         parameters=[robot_description, controller_config],
     )
-
-    rviz = Node(
+    
+    rviz_node = Node(
         package="rviz2",
         executable="rviz2",
         name="rviz2",
-        output="log",
-        arguments=["-d", rviz_config_file, "--ros-args", "--log-level", "error"],
+        output="screen",
+        arguments=["-d", rviz_config_file],
+        parameters=[moveit_config.to_dict()],
     )
+    
 
     robot_state_publisher = Node(
         package="robot_state_publisher",
@@ -81,15 +107,21 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # Spawn controllers
+    # def controller_spawner(controller_with_config):
+    #     arg_list = [
+    #         controller_with_config[0],
+    #         "-c",
+    #         controller_manager_node,
+    #         "-p",
+    #         controller_with_config[1],
+    #     ]
+    #     return Node(package="controller_manager", executable="spawner", arguments=arg_list)
+
     def controller_spawner(controller_with_config):
-        arg_list = [
-            controller_with_config[0],
-            "-c",
-            controller_manager_node,
-            "-p",
-            controller_with_config[1],
-        ]
-        return Node(package="controller_manager", executable="spawner", arguments=arg_list)
+        args = [controller_with_config[0], "-c", controller_manager_node]
+        if controller_with_config[1]:  # only add -p if file exists
+            args += ["-p", controller_with_config[1]]
+        return Node(package="controller_manager", executable="spawner", arguments=args)
 
     controller_names_and_config = [
         ("joint_state_broadcaster", []),
@@ -100,7 +132,7 @@ def launch_setup(context, *args, **kwargs):
         controller_spawner(controllers) for controllers in controller_names_and_config
     ]
 
-    to_start = [control_node, robot_state_publisher, rviz] + controller_spawners
+    to_start = [control_node, robot_state_publisher, rviz_node, move_group_node] + controller_spawners
 
     return to_start
 
@@ -111,3 +143,5 @@ def generate_launch_description():
     launch_arguments.append(DeclareLaunchArgument("robot_family", default_value=""))
     launch_arguments.append(DeclareLaunchArgument("dof", default_value="6"))
     return LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
+
+

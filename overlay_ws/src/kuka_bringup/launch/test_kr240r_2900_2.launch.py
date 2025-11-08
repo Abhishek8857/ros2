@@ -24,7 +24,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("kr240r2900_2"), "urdf", "kr240r2900_2.xacro"]
+                [FindPackageShare("kr240_r2900_2"), "urdf", "omnimove_with_kr240_r2900_2" + ".urdf.xacro"]
             ),
             " ",
             "mode:=mock",
