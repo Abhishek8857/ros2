@@ -13,9 +13,9 @@
   <xacro:arg name="controller_ip" default="0.0.0.0"/>
   <xacro:arg name="verify_robot_model" default="true"/>
   <xacro:arg name="prefix" default=""/>
-  <xacro:arg name="x" default="0"/>
+  <xacro:arg name="x" default="0.9"/>   <!-- Changed from 0 -->
   <xacro:arg name="y" default="0"/>
-  <xacro:arg name="z" default="0"/>
+  <xacro:arg name="z" default="0.85"/>  <!-- Changed from 0 -->
   <xacro:arg name="roll" default="0"/>
   <xacro:arg name="pitch" default="0"/>
   <xacro:arg name="yaw" default="0"/>

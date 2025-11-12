@@ -2,12 +2,47 @@
 <robot name="kuka_with_omnimove" xmlns:xacro="http://wiki.ros.org/xacro">
   <xacro:include filename="$(find kr240_r2900_2)/urdf/kr240_r2900_2.urdf.xacro"/>
   <xacro:include filename="$(find kuka_omnimove_e575_support)/urdf/omnimove.xacro"/>
+  <xacro:include filename="$(find sick_safetyscanners2)/description/urdf/nanoscan3/nanoscan3_macro.xacro"/>
   <xacro:omnimove prefix="omnimove_"/>
   <xacro:omnimove_ros2_control name="omnimove"/>
-  <!-- attach the arm's 'world' to the omnimove base -->
+  <!-- place the omnimove on the world ground plane (omnimove_base is child of world)
+       Adjust the origin's z value if the mesh is not grounded at its link frame. -->
   <joint name="omni_to_world" type="fixed">
-    <parent link="omnimove_base"/>
-    <child link="world"/>
-    <origin xyz="0 1 0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="omnimove_base"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
+
+  <!-- Add nanoscan3 sensors at specific locations on omnimove -->
+  <!-- Front-right sensor -->
+  <xacro:nanoscan3 
+    name="nanoscan3_front_right"
+    parent="omnimove_platform" 
+    mounting_kit="true"
+    ros_topic="/nanoscan3_front_right"
+    update_rate="50.0"
+    min_angle="${radians(-45)}"
+    max_angle="${radians(225)}"
+    min_range="0.05"
+    max_range="10.0"
+    gaussian_noise="0.006"
+    max_beams="500">
+    <origin xyz="1.55 -0.925 0.175" rpy="0 0 ${radians(-45)}" />
+  </xacro:nanoscan3>
+
+  <!-- Back-Left sensor -->
+  <xacro:nanoscan3 
+    name="nanoscan3_front_left"
+    parent="omnimove_platform" 
+    mounting_kit="true"
+    ros_topic="/nanoscan3_front_left"
+    update_rate="50.0"
+    min_angle="${radians(-45)}"
+    max_angle="${radians(225)}"
+    min_range="0.05"
+    max_range="10.0"
+    gaussian_noise="0.006"
+    max_beams="500">
+    <origin xyz="-1.55 0.925 0.175" rpy="0 0 ${radians(135)}" />
+  </xacro:nanoscan3>
 </robot>

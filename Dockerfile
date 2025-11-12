@@ -32,8 +32,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-ros-gz-bridge \
     ros-${ROS_DISTRO}-ros-gz-interfaces \
     ros-${ROS_DISTRO}-ros2-control \
-    ros-${ROS_DISTRO}-sick-safetyscanners2-interfaces \
-    ros-${ROS_DISTRO}-sick-safetyscanners-base \
+    ros-${ROS_DISTRO}-navigation2 \
+    ros-${ROS_DISTRO}-nav2-bringup \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -86,6 +86,7 @@ RUN rosdep install --from-paths src --ignore-src -r -y --skip-keys=warehouse_ros
 
 RUN source /colcon_ws/install/setup.bash  && \
     colcon build  \
+    --symlink-install \
    --event-handlers desktop_notification- console_cohesion- \
    --cmake-clean-first \
    --cmake-args -DCMAKE_BUILD_TYPE=Release 

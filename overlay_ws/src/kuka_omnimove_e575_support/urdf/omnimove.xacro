@@ -1,8 +1,52 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="omnimove">
   <xacro:macro name="omnimove" params="prefix">
-    prefix="${prefix}"
+
       <link name="${prefix}base">
+        <inertial>
+          <mass value="0.01"/>
+          <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+      </link>
+      
+      <!-- X axis prismatic joint -->
+      <joint name="${prefix}x_joint" type="prismatic">
+        <parent link="${prefix}base"/>
+        <child link="${prefix}x_link"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-10" upper="10" effort="1000" velocity="1.0"/>      </joint>
+
+      <link name="${prefix}x_link">
+        <inertial>
+          <mass value="0.01"/>
+          <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+      </link>
+
+      <!-- Y axis prismatic joint -->
+      <joint name="${prefix}y_joint" type="prismatic">
+        <parent link="${prefix}x_link"/>
+        <child link="${prefix}y_link"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-10" upper="10" effort="1000" velocity="1.0"/>
+      </joint>
+
+      <link name="${prefix}y_link">
+        <inertial>
+          <mass value="0.01"/>
+          <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+        </inertial>
+      </link>
+
+      <!-- Z axis rotational joint (rotation) -->
+      <joint name="${prefix}z_joint" type="revolute">
+        <parent link="${prefix}y_link"/>
+        <child link="${prefix}platform"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-3.14159" upper="3.14159" effort="1000" velocity="1.0"/>
+      </joint>
+
+      <link name="${prefix}platform">
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
@@ -20,7 +64,7 @@
    <xacro:macro name="omnimove_ros2_control" params="name">
 	    <ros2_control name="omnimove" type="system">
             <hardware>
-                <plugin>omnimove::KukaUTV3HardwareInterface</plugin>
+                <plugin>kuka_mock_hardware_interface::KukaMockHardwareInterface</plugin> <!-- Changed from omnimove::KukaUTV3HardwareInterface -->
                 <param name ="host">127.0.0.1</param>
                 <param name="port">24000</param>
                 <param name="agv_type">omnimove</param>

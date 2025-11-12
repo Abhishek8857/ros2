@@ -24,8 +24,6 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 
 def launch_setup(context, *args, **kwargs):
-    robot_model = LaunchConfiguration("robot_model")
-    robot_family = LaunchConfiguration("robot_family")
     dof = LaunchConfiguration("dof")
 
     rviz_config_file = PathJoinSubstitution([
@@ -33,7 +31,29 @@ def launch_setup(context, *args, **kwargs):
             "config",
             "moveit.rviz"
         ])
+    
+    
+    # Get URDF via xacro
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [
+                    FindPackageShare(f"kr240_r2900_2"),
+                    "urdf",
+                    # "kr240_r2900_2" + ".urdf.xacro",
+                    "omnimove_with_kr240_r2900_2" + ".urdf.xacro"
+                ]
+            ),
+            " ",
+            "mode:=mock",
+        ]
+    )
 
+    robot_description = {"robot_description": robot_description_content}
+
+    # Create MoveIt config with our full robot description
     moveit_config = (      
         MoveItConfigsBuilder(robot_name="kr240_r2900_2", package_name="kuka_moveit_config")
         .robot_description_semantic(
@@ -49,33 +69,17 @@ def launch_setup(context, *args, **kwargs):
         .to_moveit_configs()
     )
     
+    # Merge robot description into moveit_config dictionary
+    moveit_config_dict = moveit_config.to_dict()
+    moveit_config_dict.update(robot_description)
+    
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict()]
+        parameters=[moveit_config_dict]
     )
-    # Get URDF via xacro
-    robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution(
-                [
-                    FindPackageShare(f"kr240_r2900_2"),
-                    "urdf",
-                    # "kr240_r2900_2" + ".urdf.xacro",
-                    "omnimove_with_kr240_r2900_2" + ".urdf.xacro"
-                ]
-            ),
-            " ",
-            "mode:=",
-            "mock",
-        ]
-    )
-
-    robot_description = {"robot_description": robot_description_content}
-
+    
     controller_config = (
         get_package_share_directory("kuka_resources")
         + f"/config/fake_hardware_config_{dof.perform(context)}_axis.yaml"
@@ -83,11 +87,13 @@ def launch_setup(context, *args, **kwargs):
 
     controller_manager_node = "/controller_manager"
 
+    # Merge controller config with robot description
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[robot_description, controller_config],
     )
+
     
     rviz_node = Node(
         package="rviz2",
@@ -95,7 +101,7 @@ def launch_setup(context, *args, **kwargs):
         name="rviz2",
         output="screen",
         arguments=["-d", rviz_config_file],
-        parameters=[moveit_config.to_dict()],
+        parameters=[moveit_config_dict],
     )
     
 
