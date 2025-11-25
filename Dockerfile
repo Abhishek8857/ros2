@@ -69,10 +69,11 @@ WORKDIR /colcon_ws/
 
 # Build the workspace with resource management
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
-    colcon build  \
+    colcon build \
+    --symlink-install \
     --event-handlers desktop_notification- console_cohesion- \
    --cmake-clean-first \
-   --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers 3 --executor sequential
+   --cmake-args -DCMAKE_BUILD_TYPE=Release 
 
 # Copy entrypoint scripts and make them executable
 COPY entrypoint_scripts/ /entrypoint_scripts/
