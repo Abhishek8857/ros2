@@ -13,6 +13,12 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
+  <joint name="platform_to_arm_joint" type="fixed">
+    <parent link="omnimove_platform"/>
+    <child link="base_link"/>
+    <origin xyz="0.9 0 0.85" rpy="0 0 0"/> 
+  </joint>
+
   <!-- Add nanoscan3 sensors at specific locations on omnimove -->
   <!-- Front-right sensor -->
   <xacro:nanoscan3 
@@ -32,10 +38,10 @@
 
   <!-- Back-Left sensor -->
   <xacro:nanoscan3 
-    name="nanoscan3_front_left"
+    name="nanoscan3_back_left"
     parent="omnimove_platform" 
     mounting_kit="true"
-    ros_topic="/nanoscan3_front_left"
+    ros_topic="/nanoscan3_back_left"
     update_rate="50.0"
     min_angle="${radians(-45)}"
     max_angle="${radians(225)}"
@@ -45,4 +51,5 @@
     max_beams="500">
     <origin xyz="-1.55 0.925 0.175" rpy="0 0 ${radians(135)}" />
   </xacro:nanoscan3>
+
 </robot>
