@@ -71,5 +71,11 @@ ros2 lifecycle set robot_manager activate
     1. Added IP address of the PC in `rsi_ethernet.xml` 
 
 ## TODO's
-- [ ] Edit the URDF with the updated `kuka_robot_description` files
-- [ ] Create Moveit config files for the arm
+- [x] Edit the URDF with the updated `kuka_robot_description` files
+- [x] Create Moveit config files for the arm
+- [x] Integrate the Omnimove platform with the arm
+- [x] Integrate the LiDAR sensors with the platform
+- [x] Modify the Platform URDF to make it possible to translate in X, Y and rotate in Z Axes
+- [x] Test Lidar Sensors and confirm if they are recieving data
+
+
