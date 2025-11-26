@@ -195,10 +195,10 @@
       <parent link="${prefix}link_6"/>
     </joint>
     <!-- Commented out to allow the robot to be connected to the ominove platform instead of world -->
-    <joint name="${prefix}world-base_link" type="fixed">
+    <!-- <joint name="${prefix}world-base_link" type="fixed">
       <child link="${prefix}base_link"/>
       <parent link="world"/>
       <xacro:insert_block name="origin"/> 
-    </joint>
+    </joint> -->
   </xacro:macro>
 </robot>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <robot name="kuka_with_omnimove" xmlns:xacro="http://wiki.ros.org/xacro">
-  <xacro:include filename="$(find kr240_r2900_2)/urdf/kr240_r2900_2.urdf.xacro"/>
+  <xacro:include filename="$(find kr240_r2900_2)/urdf/kr240_r2900_2_omni.urdf.xacro"/>
   <xacro:include filename="$(find kuka_omnimove_e575_support)/urdf/omnimove.xacro"/>
   <xacro:include filename="$(find sick_safetyscanners2)/description/urdf/nanoscan3/nanoscan3_macro.xacro"/>
   <xacro:omnimove prefix="omnimove_"/>
